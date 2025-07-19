@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html lang="en" >
     <head><meta charset="UTF-8">
-<meta content="text/html; charset=utf-8" http-equiv="Content-Type"><title>Redis Expiration Strategies and Memory Eviction Policies · Erkan9527</title><meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"><title>Redis 过期策略 · Erkan9527</title><meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="description" content="格物致知
 "><meta name="generator" content="Jekyll (using style of GitBook 3.2.3)"><meta name="author" content="Erkan9527"><link rel="stylesheet" href="/erkan9527-blog/assets/gitbook/style.css">
 <link rel="stylesheet" href="/erkan9527-blog/assets/gitbook/gitbook-plugin-back-to-top-button/plugin.css">
@@ -102,11 +102,11 @@
                             <li class="chapter active" data-level="1.2" data-path="/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-19-redis-expiration-strategies.html">
                             
                                 <a href="/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-19-redis-expiration-strategies.html" onclick="pageScrollToTop(this)">
-                                    Redis Expiration Strategies and Memory Eviction Policies
+                                    Redis 过期策略
                                 </a>
                                 
                                     
-                                        <ul><li><a href="#redis-expiration-strategies-and-memory-eviction-policies" onclick="mobilePageScrollToAnchor(this)" >Redis Expiration Strategies and Memory Eviction Policies</a><ul><li><a href="#redis-过期策略" onclick="mobilePageScrollToAnchor(this)" >Redis 过期策略</a><ul><li><a href="#定时删除fixed-interval-expiration" onclick="mobilePageScrollToAnchor(this)" >定时删除（Fixed Interval Expiration）</a></li><li><a href="#惰性删除lazy-expiration" onclick="mobilePageScrollToAnchor(this)" >惰性删除（Lazy Expiration）</a></li><li><a href="#混合策略combined-policy" onclick="mobilePageScrollToAnchor(this)" >混合策略（Combined Policy）</a></li></ul></li><li><a href="#redis-内存淘汰策略" onclick="mobilePageScrollToAnchor(this)" >Redis 内存淘汰策略</a><ul><li><a href="#内存淘汰策略列表" onclick="mobilePageScrollToAnchor(this)" >内存淘汰策略列表</a></li></ul></li><li><a href="#内存淘汰策略的选择" onclick="mobilePageScrollToAnchor(this)" >内存淘汰策略的选择</a></li><li><a href="#总结" onclick="mobilePageScrollToAnchor(this)" >总结</a></li></ul></li></ul>
+                                        <ul><li><a href="#redis-过期策略" onclick="mobilePageScrollToAnchor(this)" >Redis 过期策略</a><ul><li><a href="#定时删除fixed-interval-expiration" onclick="mobilePageScrollToAnchor(this)" >定时删除（Fixed Interval Expiration）</a></li><li><a href="#惰性删除lazy-expiration" onclick="mobilePageScrollToAnchor(this)" >惰性删除（Lazy Expiration）</a></li><li><a href="#混合策略combined-policy" onclick="mobilePageScrollToAnchor(this)" >混合策略（Combined Policy）</a></li></ul></li><li><a href="#redis-内存淘汰策略" onclick="mobilePageScrollToAnchor(this)" >Redis 内存淘汰策略</a><ul><li><a href="#内存淘汰策略列表" onclick="mobilePageScrollToAnchor(this)" >内存淘汰策略列表</a></li></ul></li><li><a href="#内存淘汰策略的选择" onclick="mobilePageScrollToAnchor(this)" >内存淘汰策略的选择</a></li><li><a href="#总结" onclick="mobilePageScrollToAnchor(this)" >总结</a></li></ul>
 
                                     
                                 
@@ -159,7 +159,7 @@
                     <h1>
                         <i class="fa fa-circle-o-notch fa-spin"></i>
                         
-                            <a href="." >Redis Expiration Strategies and Memory Eviction Policies</a>
+                            <a href="." >Redis 过期策略</a>
                         
                     </h1>
                 </div>
@@ -172,12 +172,10 @@
             <div class="search-noresults">
                 <section class="normal markdown-section">
                     
-                        <h1 id="/%E6%8A%80%E6%9C%AF/redis-expiration-strategies">Redis Expiration Strategies and Memory Eviction Policies</h1>
+                        <h1 id="/%E6%8A%80%E6%9C%AF/redis-expiration-strategies">Redis 过期策略</h1>
                     
 
-                    <h1 id="redis-expiration-strategies-and-memory-eviction-policies">Redis Expiration Strategies and Memory Eviction Policies</h1>
-
-<p>Redis 提供了灵活的过期管理策略和内存淘汰机制，用于高效管理键的生命周期和内存资源。本文记录了 Redis 的过期策略（Expiration Strategies）和内存淘汰策略（Eviction Policies）的核心概念、优缺点及适用场景。</p>
+                    <p>Redis 提供了灵活的过期管理策略和内存淘汰机制，用于高效管理键的生命周期和内存资源。本文记录了 Redis 的过期策略（Expiration Strategies）和内存淘汰策略（Eviction Policies）的核心概念、优缺点及适用场景。</p>
 
 <hr />
 
@@ -550,7 +548,7 @@ window.MathJax = {
     },
     "gitbook": {
         "version": "3.2.3",
-        "time": "2025-07-19 04:57:06 +0000"
+        "time": "2025-07-19 04:58:43 +0000"
     },
     "basePath": "/erkan9527-blog",
     "book": {
