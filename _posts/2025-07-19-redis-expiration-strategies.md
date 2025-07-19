@@ -1,12 +1,10 @@
 ---
-title: Redis Expiration Strategies and Memory Eviction Policies
+title: Redis 过期策略
 author: Erkan9527
 date: 2025-07-19
 category: 技术
 layout: post
 ---
-
-# Redis Expiration Strategies and Memory Eviction Policies
 
 Redis 提供了灵活的过期管理策略和内存淘汰机制，用于高效管理键的生命周期和内存资源。本文记录了 Redis 的过期策略（Expiration Strategies）和内存淘汰策略（Eviction Policies）的核心概念、优缺点及适用场景。
 
