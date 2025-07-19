@@ -191,60 +191,43 @@
 <p><a href="https://leetcode.cn/problems/lru-cache/">LRU缓存</a></p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">LRUCache</span> <span class="p">{</span>
- <span class="nl">private:</span>
- <span class="kt">int</span> <span class="n">capacity</span><span class="p">;</span>
- <span class="n">list</span><span class="o">&lt;</span><span class="n">pair</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span><span class="kt">int</span><span class="o">&gt;&gt;</span><span class="n">cache</span><span class="p">;</span>
- <span class="n">unordered_map</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span><span class="n">list</span><span class="o">&lt;</span><span class="n">pair</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span><span class="kt">int</span><span class="o">&gt;&gt;&gt;</span><span class="n">mp</span><span class="p">;</span>
-
+    <span class="nl">private:</span>
+<span class="kt">int</span> <span class="n">capacity</span><span class="p">;</span>
+<span class="n">list</span><span class="o">&lt;</span><span class="n">pair</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span><span class="kt">int</span><span class="o">&gt;&gt;</span><span class="n">cache</span><span class="p">;</span>
+<span class="n">unordered_map</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span><span class="n">list</span><span class="o">&lt;</span><span class="n">pair</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span><span class="kt">int</span><span class="o">&gt;&gt;::</span><span class="n">iterator</span><span class="o">&gt;</span><span class="n">mp</span><span class="p">;</span>
 <span class="nl">public:</span>
-    <span class="n">LRUCache</span><span class="p">(</span><span class="kt">int</span> <span class="n">capacity</span><span class="p">)</span><span class="o">:</span><span class="n">capacity</span><span class="p">(</span><span class="n">capacity</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">LRUCache</span><span class="p">(</span><span class="kt">int</span> <span class="n">capacity</span><span class="p">)</span><span class="o">:</span><span class="n">capacity</span><span class="p">(</span><span class="n">capacity</span><span class="p">){</span>
         
     <span class="p">}</span>
     
     <span class="kt">int</span> <span class="nf">get</span><span class="p">(</span><span class="kt">int</span> <span class="n">key</span><span class="p">)</span> <span class="p">{</span>
-        
-
         <span class="k">if</span><span class="p">(</span><span class="n">mp</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="n">key</span><span class="p">)</span><span class="o">==</span><span class="n">mp</span><span class="p">.</span><span class="n">end</span><span class="p">()){</span>
-<span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+            <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
         <span class="p">}</span>
-<span class="k">else</span><span class="p">{</span>
-<span class="k">auto</span> <span class="n">it</span><span class="o">=</span><span class="n">mp</span><span class="p">[</span><span class="n">key</span><span class="p">];</span>
-<span class="kt">int</span> <span class="n">value</span><span class="o">=</span><span class="n">it</span><span class="o">-&gt;</span><span class="n">second</span><span class="p">;</span>
-<span class="n">cache</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">it</span><span class="p">);</span>
-<span class="n">cache</span><span class="p">.</span><span class="n">push_front</span><span class="p">({</span><span class="n">key</span><span class="p">,</span><span class="n">value</span><span class="p">});</span>
-<span class="n">mp</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">=</span><span class="n">cache</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span>
-<span class="k">return</span> <span class="n">value</span><span class="p">;</span>
-
-<span class="p">}</span>
-
+        <span class="k">auto</span> <span class="n">it</span><span class="o">=</span><span class="n">mp</span><span class="p">[</span><span class="n">key</span><span class="p">];</span>
+        <span class="kt">int</span> <span class="n">value</span><span class="o">=</span><span class="n">it</span><span class="o">-&gt;</span><span class="n">second</span><span class="p">;</span>
+        <span class="n">cache</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">it</span><span class="p">);</span>
+        <span class="n">cache</span><span class="p">.</span><span class="n">push_front</span><span class="p">({</span><span class="n">key</span><span class="p">,</span><span class="n">value</span><span class="p">});</span>
+        <span class="n">mp</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">=</span><span class="n">cache</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span>
+        <span class="k">return</span> <span class="n">value</span><span class="p">;</span>
     <span class="p">}</span>
     
     <span class="kt">void</span> <span class="nf">put</span><span class="p">(</span><span class="kt">int</span> <span class="n">key</span><span class="p">,</span> <span class="kt">int</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span>
-        <span class="c1">// 如果键已存在，更新值并移动到链表头部</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">mp</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">!=</span> <span class="n">mp</span><span class="p">.</span><span class="n">end</span><span class="p">())</span> <span class="p">{</span>
-            <span class="k">auto</span> <span class="n">it</span> <span class="o">=</span> <span class="n">mp</span><span class="p">[</span><span class="n">key</span><span class="p">];</span>
-            <span class="n">cache</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">it</span><span class="p">);</span> <span class="c1">// 从链表中删除旧位置</span>
-        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-            <span class="c1">// 如果缓存已满，移除链表尾部的最久未使用的键值对</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">cache</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">==</span> <span class="n">capacity</span><span class="p">)</span> <span class="p">{</span>
-                <span class="k">auto</span> <span class="n">last</span> <span class="o">=</span> <span class="n">cache</span><span class="p">.</span><span class="n">back</span><span class="p">();</span>
-                <span class="n">mp</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">last</span><span class="p">.</span><span class="n">first</span><span class="p">);</span> <span class="c1">// 从哈希表中删除对应的键</span>
-                <span class="n">cache</span><span class="p">.</span><span class="n">pop_back</span><span class="p">();</span> <span class="c1">// 从链表中删除尾部元素</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">mp</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="n">key</span><span class="p">)</span><span class="o">!=</span><span class="n">mp</span><span class="p">.</span><span class="n">end</span><span class="p">()){</span>
+            <span class="k">auto</span> <span class="n">it</span><span class="o">=</span><span class="n">mp</span><span class="p">[</span><span class="n">key</span><span class="p">];</span>
+            <span class="n">cache</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">it</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">else</span><span class="p">{</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">cache</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="o">==</span><span class="n">capacity</span><span class="p">){</span>
+        <span class="k">auto</span> <span class="n">it</span><span class="o">=</span><span class="n">cache</span><span class="p">.</span><span class="n">back</span><span class="p">();</span>
+        <span class="n">mp</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">it</span><span class="p">.</span><span class="n">first</span><span class="p">);</span>
+        <span class="n">cache</span><span class="p">.</span><span class="n">pop_back</span><span class="p">();</span>
             <span class="p">}</span>
         <span class="p">}</span>
-        <span class="c1">// 插入新的键值对到链表头部</span>
-        <span class="n">cache</span><span class="p">.</span><span class="n">push_front</span><span class="p">({</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">});</span>
-        <span class="n">mp</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">cache</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span> <span class="c1">// 更新哈希表中的迭代器</span>
-    
+            <span class="n">cache</span><span class="p">.</span><span class="n">push_front</span><span class="p">({</span><span class="n">key</span><span class="p">,</span><span class="n">value</span><span class="p">});</span>
+            <span class="n">mp</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">=</span><span class="n">cache</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span>
     <span class="p">}</span>
 <span class="p">};</span>
-
-<span class="cm">/**
- * Your LRUCache object will be instantiated and called as such:
- * LRUCache* obj = new LRUCache(capacity);
- * int param_1 = obj-&gt;get(key);
- * obj-&gt;put(key,value);
- */</span>
 
 </code></pre></div></div>
 </section>
@@ -428,7 +411,7 @@ window.MathJax = {
     },
     "gitbook": {
         "version": "3.2.3",
-        "time": "2025-07-19 05:36:43 +0000"
+        "time": "2025-07-19 09:27:29 +0000"
     },
     "basePath": "/erkan9527-blog",
     "book": {
