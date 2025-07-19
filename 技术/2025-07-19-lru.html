@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html lang="en" >
     <head><meta charset="UTF-8">
-<meta content="text/html; charset=utf-8" http-equiv="Content-Type"><title>Erkan9527 · Erkan9527</title><meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"><title>LRU缓存实现 · Erkan9527</title><meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="description" content="格物致知
 "><meta name="generator" content="Jekyll (using style of GitBook 3.2.3)"><meta name="author" content="Erkan9527"><link rel="stylesheet" href="/erkan9527-blog/assets/gitbook/style.css">
 <link rel="stylesheet" href="/erkan9527-blog/assets/gitbook/gitbook-plugin-back-to-top-button/plugin.css">
@@ -25,9 +25,11 @@
 
 
 
+            <link rel="prev" href="/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-19-redismothod.html" />
+        
 
         
-            <link rel="next" href="/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-19-redismothod.html" />
+            <link rel="next" href="/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-19-redis-expiration-strategies.html" />
         
     </head>
     <body>
@@ -65,7 +67,7 @@
         </div>
         <ul class="summary">
             
-            <li class="chapter active" data-level="1.1" data-path="/erkan9527-blog">
+            <li class="chapter" data-level="1.1" data-path="/erkan9527-blog">
             
                 <a href="/erkan9527-blog/" onclick="pageScrollToTop(this)">
                     Erkan9527
@@ -97,12 +99,15 @@
                             </li>
                         
                             
-                            <li class="chapter" data-level="1.1" data-path="/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-19-lru.html">
+                            <li class="chapter active" data-level="1.2" data-path="/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-19-lru.html">
                             
                                 <a href="/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-19-lru.html" onclick="pageScrollToTop(this)">
                                     LRU缓存实现
                                 </a>
                                 
+                                    
+                                        <ul><li><a href="#题目" onclick="mobilePageScrollToAnchor(this)" >题目</a></li></ul>
+
                                     
                                 
                             </li>
@@ -165,7 +170,7 @@
                     <h1>
                         <i class="fa fa-circle-o-notch fa-spin"></i>
                         
-                            <a href="." >Erkan9527</a>
+                            <a href="." >LRU缓存实现</a>
                         
                     </h1>
                 </div>
@@ -178,25 +183,70 @@
             <div class="search-noresults">
                 <section class="normal markdown-section">
                     
-                        <h1 id="">Erkan9527</h1>
+                        <h1 id="/%E6%8A%80%E6%9C%AF/lru">LRU缓存实现</h1>
                     
 
-                    <ul>
-  <li>学校：广东药科大学</li>
-  <li>专业：智能医学工程</li>
-  <li>学历：本科</li>
-</ul>
+                    <h2 id="题目">题目</h2>
 
-<h3 id="获奖情况">获奖情况</h3>
+<p><a href="https://leetcode.cn/problems/lru-cache/">LRU缓存</a></p>
 
-<p><img src="assets/mcm_F.png" alt="2025年美国大学生数学建模大赛F奖" /></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class LRUCache {
+ private:
+ int capacity;
+ list&lt;pair&lt;int,int&gt;&gt;cache;
+ unordered_map&lt;int,list&lt;pair&lt;int,int&gt;&gt;&gt;mp;
 
-<p><img src="assets/2024cnm.png" alt="2024全国大学生数学建模大赛广东省二等奖" /></p>
+public:
+    LRUCache(int capacity):capacity(capacity) {
+        
+    }
+    
+    int get(int key) {
+        
 
-<p><img src="assets/2024mothercup.png" alt="2024全国大学生数学建模大赛广东省二等奖" /></p>
+        if(mp.find(key)==mp.end()){
+return -1;
+        }
+else{
+auto it=mp[key];
+int value=it-&gt;second;
+cache.erase(it);
+cache.push_front({key,value});
+mp[key]=cache.begin();
+return value;
 
-<p><img src="assets/dingding.png" alt="2024年钉钉杯大学生大数据挑战赛三等奖" /></p>
+}
 
+    }
+    
+    void put(int key, int value) {
+        // 如果键已存在，更新值并移动到链表头部
+        if (mp.find(key) != mp.end()) {
+            auto it = mp[key];
+            cache.erase(it); // 从链表中删除旧位置
+        } else {
+            // 如果缓存已满，移除链表尾部的最久未使用的键值对
+            if (cache.size() == capacity) {
+                auto last = cache.back();
+                mp.erase(last.first); // 从哈希表中删除对应的键
+                cache.pop_back(); // 从链表中删除尾部元素
+            }
+        }
+        // 插入新的键值对到链表头部
+        cache.push_front({key, value});
+        mp[key] = cache.begin(); // 更新哈希表中的迭代器
+    
+    }
+};
+
+/**
+ * Your LRUCache object will be instantiated and called as such:
+ * LRUCache* obj = new LRUCache(capacity);
+ * int param_1 = obj-&gt;get(key);
+ * obj-&gt;put(key,value);
+ */
+
+</code></pre></div></div>
 </section>
             </div><div class="search-results">
     <div class="has-results">
@@ -252,12 +302,14 @@ window.MathJax = {
     }
 </script>
 
-<a href="/erkan9527-blog/" class="navigation navigation-pre navigation-unique">
-                        <i class="fa"></i>
-                    </a>
+
+                        <a href="/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-19-redismothod.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: Redis 集群方案">
+                            <i class="fa fa-angle-left"></i>
+                        </a>
+                    
 
                     
-                        <a href="/erkan9527-blog" class="navigation navigation-next navigation-unique" aria-label="Next page: ">
+                        <a href="/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-19-redis-expiration-strategies.html" class="navigation navigation-next navigation-unique" aria-label="Next page: Redis 过期策略">
                             <i class="fa fa-angle-right"></i>
                         </a>
                     
@@ -273,14 +325,12 @@ window.MathJax = {
         "level": "1.1",
         "depth": 1,
         
-
-        
         "next": {
-            "title": "Redis 集群方案",
+            "title": "Redis 过期策略",
             "level": "1.2",
             "depth": 1,
-            "path": "_posts/2025-07-18-redismothod.md",
-            "ref": "_posts/2025-07-18-redismothod.md",
+            "path": "_posts/2025-07-19-redis-expiration-strategies.md",
+            "ref": "_posts/2025-07-19-redis-expiration-strategies.md",
             "articles": []
         },
         
@@ -372,8 +422,8 @@ window.MathJax = {
         "gitbook": "*"
     },
     "file": {
-        "path": "README.md",
-        "mtime": "",
+        "path": "_posts/2025-07-19-lru.md",
+        "mtime": "2025-07-19 00:00:00 +0000",
         "type": "markdown"
     },
     "gitbook": {
