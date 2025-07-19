@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://erkan9527.github.io/erkan9527-blog/feed.xml" rel="self" type="application/atom+xml" /><link href="https://erkan9527.github.io/erkan9527-blog/" rel="alternate" type="text/html" /><updated>2025-07-19T05:33:05+00:00</updated><id>https://erkan9527.github.io/erkan9527-blog/feed.xml</id><title type="html">Erkan9527</title><subtitle>格物致知
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://erkan9527.github.io/erkan9527-blog/feed.xml" rel="self" type="application/atom+xml" /><link href="https://erkan9527.github.io/erkan9527-blog/" rel="alternate" type="text/html" /><updated>2025-07-19T05:36:43+00:00</updated><id>https://erkan9527.github.io/erkan9527-blog/feed.xml</id><title type="html">Erkan9527</title><subtitle>格物致知
 </subtitle><author><name>Erkan9527</name></author><entry><title type="html">Redis 集群方案</title><link href="https://erkan9527.github.io/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-19-redismothod.html" rel="alternate" type="text/html" title="Redis 集群方案" /><published>2025-07-19T00:00:00+00:00</published><updated>2025-07-19T00:00:00+00:00</updated><id>https://erkan9527.github.io/erkan9527-blog/%E6%8A%80%E6%9C%AF/redismothod</id><content type="html" xml:base="https://erkan9527.github.io/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-19-redismothod.html"><![CDATA[<h1 id="redis-集群方案">Redis 集群方案</h1>
 
 <p>Redis 是一种高性能的内存数据库，广泛应用于缓存、消息队列和实时数据处理等场景。随着业务规模的增长，单机 Redis 的性能和容量可能无法满足需求，因此需要采用分布式部署方案。本文记录了 Redis 主从模式、哨兵模式和集群模式的核心概念、优缺点及部署方式。</p>
@@ -51,61 +51,61 @@
 
 <p><a href="https://leetcode.cn/problems/lru-cache/">LRU缓存</a></p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class LRUCache {
- private:
- int capacity;
- list&lt;pair&lt;int,int&gt;&gt;cache;
- unordered_map&lt;int,list&lt;pair&lt;int,int&gt;&gt;&gt;mp;
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">LRUCache</span> <span class="p">{</span>
+ <span class="nl">private:</span>
+ <span class="kt">int</span> <span class="n">capacity</span><span class="p">;</span>
+ <span class="n">list</span><span class="o">&lt;</span><span class="n">pair</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span><span class="kt">int</span><span class="o">&gt;&gt;</span><span class="n">cache</span><span class="p">;</span>
+ <span class="n">unordered_map</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span><span class="n">list</span><span class="o">&lt;</span><span class="n">pair</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span><span class="kt">int</span><span class="o">&gt;&gt;&gt;</span><span class="n">mp</span><span class="p">;</span>
 
-public:
-    LRUCache(int capacity):capacity(capacity) {
+<span class="nl">public:</span>
+    <span class="n">LRUCache</span><span class="p">(</span><span class="kt">int</span> <span class="n">capacity</span><span class="p">)</span><span class="o">:</span><span class="n">capacity</span><span class="p">(</span><span class="n">capacity</span><span class="p">)</span> <span class="p">{</span>
         
-    }
+    <span class="p">}</span>
     
-    int get(int key) {
+    <span class="kt">int</span> <span class="nf">get</span><span class="p">(</span><span class="kt">int</span> <span class="n">key</span><span class="p">)</span> <span class="p">{</span>
         
 
-        if(mp.find(key)==mp.end()){
-return -1;
-        }
-else{
-auto it=mp[key];
-int value=it-&gt;second;
-cache.erase(it);
-cache.push_front({key,value});
-mp[key]=cache.begin();
-return value;
+        <span class="k">if</span><span class="p">(</span><span class="n">mp</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="n">key</span><span class="p">)</span><span class="o">==</span><span class="n">mp</span><span class="p">.</span><span class="n">end</span><span class="p">()){</span>
+<span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+        <span class="p">}</span>
+<span class="k">else</span><span class="p">{</span>
+<span class="k">auto</span> <span class="n">it</span><span class="o">=</span><span class="n">mp</span><span class="p">[</span><span class="n">key</span><span class="p">];</span>
+<span class="kt">int</span> <span class="n">value</span><span class="o">=</span><span class="n">it</span><span class="o">-&gt;</span><span class="n">second</span><span class="p">;</span>
+<span class="n">cache</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">it</span><span class="p">);</span>
+<span class="n">cache</span><span class="p">.</span><span class="n">push_front</span><span class="p">({</span><span class="n">key</span><span class="p">,</span><span class="n">value</span><span class="p">});</span>
+<span class="n">mp</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">=</span><span class="n">cache</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span>
+<span class="k">return</span> <span class="n">value</span><span class="p">;</span>
 
-}
+<span class="p">}</span>
 
-    }
+    <span class="p">}</span>
     
-    void put(int key, int value) {
-        // 如果键已存在，更新值并移动到链表头部
-        if (mp.find(key) != mp.end()) {
-            auto it = mp[key];
-            cache.erase(it); // 从链表中删除旧位置
-        } else {
-            // 如果缓存已满，移除链表尾部的最久未使用的键值对
-            if (cache.size() == capacity) {
-                auto last = cache.back();
-                mp.erase(last.first); // 从哈希表中删除对应的键
-                cache.pop_back(); // 从链表中删除尾部元素
-            }
-        }
-        // 插入新的键值对到链表头部
-        cache.push_front({key, value});
-        mp[key] = cache.begin(); // 更新哈希表中的迭代器
+    <span class="kt">void</span> <span class="nf">put</span><span class="p">(</span><span class="kt">int</span> <span class="n">key</span><span class="p">,</span> <span class="kt">int</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// 如果键已存在，更新值并移动到链表头部</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">mp</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">!=</span> <span class="n">mp</span><span class="p">.</span><span class="n">end</span><span class="p">())</span> <span class="p">{</span>
+            <span class="k">auto</span> <span class="n">it</span> <span class="o">=</span> <span class="n">mp</span><span class="p">[</span><span class="n">key</span><span class="p">];</span>
+            <span class="n">cache</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">it</span><span class="p">);</span> <span class="c1">// 从链表中删除旧位置</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="c1">// 如果缓存已满，移除链表尾部的最久未使用的键值对</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">cache</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">==</span> <span class="n">capacity</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">auto</span> <span class="n">last</span> <span class="o">=</span> <span class="n">cache</span><span class="p">.</span><span class="n">back</span><span class="p">();</span>
+                <span class="n">mp</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">last</span><span class="p">.</span><span class="n">first</span><span class="p">);</span> <span class="c1">// 从哈希表中删除对应的键</span>
+                <span class="n">cache</span><span class="p">.</span><span class="n">pop_back</span><span class="p">();</span> <span class="c1">// 从链表中删除尾部元素</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="c1">// 插入新的键值对到链表头部</span>
+        <span class="n">cache</span><span class="p">.</span><span class="n">push_front</span><span class="p">({</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">});</span>
+        <span class="n">mp</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">cache</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span> <span class="c1">// 更新哈希表中的迭代器</span>
     
-    }
-};
+    <span class="p">}</span>
+<span class="p">};</span>
 
-/**
+<span class="cm">/**
  * Your LRUCache object will be instantiated and called as such:
  * LRUCache* obj = new LRUCache(capacity);
  * int param_1 = obj-&gt;get(key);
  * obj-&gt;put(key,value);
- */
+ */</span>
 
 </code></pre></div></div>]]></content><author><name>Erkan9527</name></author><category term="技术" /><summary type="html"><![CDATA[题目]]></summary></entry><entry><title type="html">Redis 过期策略</title><link href="https://erkan9527.github.io/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-19-redis-expiration-strategies.html" rel="alternate" type="text/html" title="Redis 过期策略" /><published>2025-07-19T00:00:00+00:00</published><updated>2025-07-19T00:00:00+00:00</updated><id>https://erkan9527.github.io/erkan9527-blog/%E6%8A%80%E6%9C%AF/redis-expiration-strategies</id><content type="html" xml:base="https://erkan9527.github.io/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-19-redis-expiration-strategies.html"><![CDATA[<p>Redis 提供了灵活的过期管理策略和内存淘汰机制，用于高效管理键的生命周期和内存资源。本文记录了 Redis 的过期策略（Expiration Strategies）和内存淘汰策略（Eviction Policies）的核心概念、优缺点及适用场景。</p>
 
