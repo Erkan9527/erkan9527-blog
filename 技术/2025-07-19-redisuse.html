@@ -383,29 +383,29 @@ SETNX 确保只有一个客户端能够成功设置锁。</p>
 设置锁的过期时间，防止锁被永久占用。</p>
   </li>
   <li>
-    <p><strong>示例代码</strong>
-```python
-import redis
-import time</p>
+    <p><strong>示例代码</strong></p>
   </li>
 </ol>
 
-<p>r = redis.StrictRedis(host=’localhost’, port=6379, db=0)</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">redis</span>
+<span class="kn">import</span> <span class="n">time</span>
 
-<p>def acquire_lock(lock_key, lock_timeout):
-    while True:
-        now = int(time.time())
-        lock_timeout = now + lock_timeout + 1
-        if r.setnx(lock_key, lock_timeout):
-            return True
-        elif int(r.get(lock_key)) &lt; now:
-            r.delete(lock_key)
-        else:
-            time.sleep(0.001)</p>
+<span class="n">r</span> <span class="o">=</span> <span class="n">redis</span><span class="p">.</span><span class="nc">StrictRedis</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="sh">'</span><span class="s">localhost</span><span class="sh">'</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">6379</span><span class="p">,</span> <span class="n">db</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
-<p>def release_lock(lock_key):
-    r.delete(lock_key)
-```</p>
+<span class="k">def</span> <span class="nf">acquire_lock</span><span class="p">(</span><span class="n">lock_key</span><span class="p">,</span> <span class="n">lock_timeout</span><span class="p">):</span>
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="n">now</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="n">time</span><span class="p">.</span><span class="nf">time</span><span class="p">())</span>
+        <span class="n">lock_timeout</span> <span class="o">=</span> <span class="n">now</span> <span class="o">+</span> <span class="n">lock_timeout</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">r</span><span class="p">.</span><span class="nf">setnx</span><span class="p">(</span><span class="n">lock_key</span><span class="p">,</span> <span class="n">lock_timeout</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">True</span>
+        <span class="k">elif</span> <span class="nf">int</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="n">lock_key</span><span class="p">))</span> <span class="o">&lt;</span> <span class="n">now</span><span class="p">:</span>
+            <span class="n">r</span><span class="p">.</span><span class="nf">delete</span><span class="p">(</span><span class="n">lock_key</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">time</span><span class="p">.</span><span class="nf">sleep</span><span class="p">(</span><span class="mf">0.001</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">release_lock</span><span class="p">(</span><span class="n">lock_key</span><span class="p">):</span>
+    <span class="n">r</span><span class="p">.</span><span class="nf">delete</span><span class="p">(</span><span class="n">lock_key</span><span class="p">)</span>
+</code></pre></div></div>
 </section>
             </div><div class="search-results">
     <div class="has-results">
@@ -574,7 +574,7 @@ window.MathJax = {
     },
     "gitbook": {
         "version": "3.2.3",
-        "time": "2025-07-19 10:14:25 +0000"
+        "time": "2025-07-19 10:16:50 +0000"
     },
     "basePath": "/erkan9527-blog",
     "book": {

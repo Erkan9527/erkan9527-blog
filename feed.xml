@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://erkan9527.github.io/erkan9527-blog/feed.xml" rel="self" type="application/atom+xml" /><link href="https://erkan9527.github.io/erkan9527-blog/" rel="alternate" type="text/html" /><updated>2025-07-19T10:14:25+00:00</updated><id>https://erkan9527.github.io/erkan9527-blog/feed.xml</id><title type="html">Erkan9527</title><subtitle>格物致知
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://erkan9527.github.io/erkan9527-blog/feed.xml" rel="self" type="application/atom+xml" /><link href="https://erkan9527.github.io/erkan9527-blog/" rel="alternate" type="text/html" /><updated>2025-07-19T10:16:50+00:00</updated><id>https://erkan9527.github.io/erkan9527-blog/feed.xml</id><title type="html">Erkan9527</title><subtitle>格物致知
 </subtitle><author><name>Erkan9527</name></author><entry><title type="html">Redis 集群方案</title><link href="https://erkan9527.github.io/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-19-redismothod.html" rel="alternate" type="text/html" title="Redis 集群方案" /><published>2025-07-19T00:00:00+00:00</published><updated>2025-07-19T00:00:00+00:00</updated><id>https://erkan9527.github.io/erkan9527-blog/%E6%8A%80%E6%9C%AF/redismothod</id><content type="html" xml:base="https://erkan9527.github.io/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-19-redismothod.html"><![CDATA[<h1 id="redis-集群方案">Redis 集群方案</h1>
 
 <p>Redis 是一种高性能的内存数据库，广泛应用于缓存、消息队列和实时数据处理等场景。随着业务规模的增长，单机 Redis 的性能和容量可能无法满足需求，因此需要采用分布式部署方案。本文记录了 Redis 主从模式、哨兵模式和集群模式的核心概念、优缺点及部署方式。</p>
@@ -700,26 +700,26 @@ SETNX 确保只有一个客户端能够成功设置锁。</p>
 设置锁的过期时间，防止锁被永久占用。</p>
   </li>
   <li>
-    <p><strong>示例代码</strong>
-```python
-import redis
-import time</p>
+    <p><strong>示例代码</strong></p>
   </li>
 </ol>
 
-<p>r = redis.StrictRedis(host=’localhost’, port=6379, db=0)</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">redis</span>
+<span class="kn">import</span> <span class="n">time</span>
 
-<p>def acquire_lock(lock_key, lock_timeout):
-    while True:
-        now = int(time.time())
-        lock_timeout = now + lock_timeout + 1
-        if r.setnx(lock_key, lock_timeout):
-            return True
-        elif int(r.get(lock_key)) &lt; now:
-            r.delete(lock_key)
-        else:
-            time.sleep(0.001)</p>
+<span class="n">r</span> <span class="o">=</span> <span class="n">redis</span><span class="p">.</span><span class="nc">StrictRedis</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="sh">'</span><span class="s">localhost</span><span class="sh">'</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">6379</span><span class="p">,</span> <span class="n">db</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
-<p>def release_lock(lock_key):
-    r.delete(lock_key)
-```</p>]]></content><author><name>Erkan9527</name></author><category term="技术" /><summary type="html"><![CDATA[Redis 是一种高性能的内存数据库，广泛应用于缓存、分布式锁、消息队列等场景。然而，在实际使用中，可能会遇到一些常见问题，如热 Key、大 Key、缓存击穿、缓存穿透、缓存雪崩等。本文将对这些问题进行总结，并提供相应的解决方案。]]></summary></entry></feed>
+<span class="k">def</span> <span class="nf">acquire_lock</span><span class="p">(</span><span class="n">lock_key</span><span class="p">,</span> <span class="n">lock_timeout</span><span class="p">):</span>
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="n">now</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="n">time</span><span class="p">.</span><span class="nf">time</span><span class="p">())</span>
+        <span class="n">lock_timeout</span> <span class="o">=</span> <span class="n">now</span> <span class="o">+</span> <span class="n">lock_timeout</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">r</span><span class="p">.</span><span class="nf">setnx</span><span class="p">(</span><span class="n">lock_key</span><span class="p">,</span> <span class="n">lock_timeout</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">True</span>
+        <span class="k">elif</span> <span class="nf">int</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="n">lock_key</span><span class="p">))</span> <span class="o">&lt;</span> <span class="n">now</span><span class="p">:</span>
+            <span class="n">r</span><span class="p">.</span><span class="nf">delete</span><span class="p">(</span><span class="n">lock_key</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">time</span><span class="p">.</span><span class="nf">sleep</span><span class="p">(</span><span class="mf">0.001</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">release_lock</span><span class="p">(</span><span class="n">lock_key</span><span class="p">):</span>
+    <span class="n">r</span><span class="p">.</span><span class="nf">delete</span><span class="p">(</span><span class="n">lock_key</span><span class="p">)</span>
+</code></pre></div></div>]]></content><author><name>Erkan9527</name></author><category term="技术" /><summary type="html"><![CDATA[Redis 是一种高性能的内存数据库，广泛应用于缓存、分布式锁、消息队列等场景。然而，在实际使用中，可能会遇到一些常见问题，如热 Key、大 Key、缓存击穿、缓存穿透、缓存雪崩等。本文将对这些问题进行总结，并提供相应的解决方案。]]></summary></entry></feed>
