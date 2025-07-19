@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html lang="en" >
     <head><meta charset="UTF-8">
-<meta content="text/html; charset=utf-8" http-equiv="Content-Type"><title>Erkan9527 · Erkan9527</title><meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"><title>Redis 常见问题与解决方案 · Erkan9527</title><meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="description" content="格物致知
 "><meta name="generator" content="Jekyll (using style of GitBook 3.2.3)"><meta name="author" content="Erkan9527"><link rel="stylesheet" href="/erkan9527-blog/assets/gitbook/style.css">
 <link rel="stylesheet" href="/erkan9527-blog/assets/gitbook/gitbook-plugin-back-to-top-button/plugin.css">
@@ -25,9 +25,9 @@
 
 
 
-
+            <link rel="prev" href="/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-19-redis.html" />
         
-            <link rel="next" href="/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-19-redismothod.html" />
+
         
     </head>
     <body>
@@ -65,7 +65,7 @@
         </div>
         <ul class="summary">
             
-            <li class="chapter active" data-level="1.1" data-path="/erkan9527-blog">
+            <li class="chapter" data-level="1.1" data-path="/erkan9527-blog">
             
                 <a href="/erkan9527-blog/" onclick="pageScrollToTop(this)">
                     Erkan9527
@@ -130,12 +130,15 @@
                             </li>
                         
                             
-                            <li class="chapter" data-level="1.1" data-path="/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-19-redisuse.html">
+                            <li class="chapter active" data-level="1.2" data-path="/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-19-redisuse.html">
                             
                                 <a href="/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-19-redisuse.html" onclick="pageScrollToTop(this)">
                                     Redis 常见问题与解决方案
                                 </a>
                                 
+                                    
+                                        <ul><li><a href="#热-key-问题" onclick="mobilePageScrollToAnchor(this)" >热 Key 问题</a><ul><li><a href="#什么是热-key-问题" onclick="mobilePageScrollToAnchor(this)" >什么是热 Key 问题？</a></li><li><a href="#解决方案" onclick="mobilePageScrollToAnchor(this)" >解决方案</a></li></ul></li><li><a href="#大-key-问题" onclick="mobilePageScrollToAnchor(this)" >大 Key 问题</a><ul><li><a href="#什么是大-key-问题" onclick="mobilePageScrollToAnchor(this)" >什么是大 Key 问题？</a></li><li><a href="#解决方案-1" onclick="mobilePageScrollToAnchor(this)" >解决方案</a></li></ul></li><li><a href="#缓存击穿缓存穿透与缓存雪崩" onclick="mobilePageScrollToAnchor(this)" >缓存击穿、缓存穿透与缓存雪崩</a><ul><li><a href="#缓存击穿" onclick="mobilePageScrollToAnchor(this)" >缓存击穿</a></li><li><a href="#缓存穿透" onclick="mobilePageScrollToAnchor(this)" >缓存穿透</a></li><li><a href="#缓存雪崩" onclick="mobilePageScrollToAnchor(this)" >缓存雪崩</a></li></ul></li><li><a href="#数据库与缓存不一致问题" onclick="mobilePageScrollToAnchor(this)" >数据库与缓存不一致问题</a><ul><li><a href="#问题场景" onclick="mobilePageScrollToAnchor(this)" >问题场景</a></li><li><a href="#解决方案-2" onclick="mobilePageScrollToAnchor(this)" >解决方案</a></li></ul></li><li><a href="#redis-延迟消息" onclick="mobilePageScrollToAnchor(this)" >Redis 延迟消息</a><ul><li><a href="#实现方式" onclick="mobilePageScrollToAnchor(this)" >实现方式</a></li></ul></li><li><a href="#redis-的其他应用场景" onclick="mobilePageScrollToAnchor(this)" >Redis 的其他应用场景</a></li><li><a href="#分布式锁的实现" onclick="mobilePageScrollToAnchor(this)" >分布式锁的实现</a><ul><li><a href="#使用-setnx-实现分布式锁" onclick="mobilePageScrollToAnchor(this)" >使用 SETNX 实现分布式锁</a></li></ul></li></ul>
+
                                     
                                 
                             </li>
@@ -176,7 +179,7 @@
                     <h1>
                         <i class="fa fa-circle-o-notch fa-spin"></i>
                         
-                            <a href="." >Erkan9527</a>
+                            <a href="." >Redis 常见问题与解决方案</a>
                         
                     </h1>
                 </div>
@@ -189,25 +192,220 @@
             <div class="search-noresults">
                 <section class="normal markdown-section">
                     
-                        <h1 id="">Erkan9527</h1>
+                        <h1 id="/%E6%8A%80%E6%9C%AF/redisuse">Redis 常见问题与解决方案</h1>
                     
 
-                    <ul>
-  <li>学校：广东药科大学</li>
-  <li>专业：智能医学工程</li>
-  <li>学历：本科</li>
+                    <p>Redis 是一种高性能的内存数据库，广泛应用于缓存、分布式锁、消息队列等场景。然而，在实际使用中，可能会遇到一些常见问题，如热 Key、大 Key、缓存击穿、缓存穿透、缓存雪崩等。本文将对这些问题进行总结，并提供相应的解决方案。</p>
+
+<hr />
+
+<h2 id="热-key-问题">热 Key 问题</h2>
+
+<h3 id="什么是热-key-问题">什么是热 Key 问题？</h3>
+<p>热 Key 问题是指在短时间内大量请求集中访问 Redis 中的某个特定键，导致该键所在的节点负载过高，从而影响整个集群的性能和稳定性。</p>
+
+<h3 id="解决方案">解决方案</h3>
+<ol>
+  <li>
+    <p><strong>限流</strong><br />
+对特定的 slot 或热 Key 进行限流，限制单位时间内的访问次数，减轻服务器压力。此方法适合紧急情况下使用，但可能对业务造成一定影响。</p>
+  </li>
+  <li>
+    <p><strong>本地缓存</strong><br />
+在应用层增加本地缓存（如 Guava Cache），将热点数据存储在本地内存中，减少对 Redis 的频繁访问，同时设置过期时间以保证数据一致性。</p>
+  </li>
+  <li>
+    <p><strong>拆分 Key</strong><br />
+将一个大的热点 Key 拆分成多个小的 Key，分散到不同的节点上。例如，将一个大的 List 拆分成多个小的 List，每个小 List 使用不同的 Key 存储。</p>
+  </li>
+</ol>
+
+<hr />
+
+<h2 id="大-key-问题">大 Key 问题</h2>
+
+<h3 id="什么是大-key-问题">什么是大 Key 问题？</h3>
+<p>大 Key 问题是指 Redis 中某个键值对占用了过多的内存，导致该键所在的节点负载过高，从而影响整个集群的性能和稳定性。</p>
+
+<h3 id="解决方案-1">解决方案</h3>
+<ol>
+  <li>
+    <p><strong>拆分大 Key</strong><br />
+将一个大的 Key 拆分成多个小的 Key。例如，将一个大 List 或大 Hash 表拆分成多个小的 List 或 Hash 表。</p>
+  </li>
+  <li>
+    <p><strong>压缩数据</strong><br />
+对存储在 Redis 中的大对象进行压缩，减少内存占用。但需要注意压缩和解压缩操作会增加 CPU 负担。</p>
+  </li>
+  <li>
+    <p><strong>优化数据结构</strong><br />
+选择合适的数据结构存储数据。例如，使用 Sorted Set 替代 List 存储有序数据。</p>
+  </li>
+  <li>
+    <p><strong>定期清理</strong><br />
+对临时性的大 Key 设置合理的过期时间，或者定期扫描并清理大 Key。</p>
+  </li>
+</ol>
+
+<hr />
+
+<h2 id="缓存击穿缓存穿透与缓存雪崩">缓存击穿、缓存穿透与缓存雪崩</h2>
+
+<h3 id="缓存击穿">缓存击穿</h3>
+<p><strong>定义</strong><br />
+缓存击穿是指在高并发情况下，当一个热点 Key 过期时，大量请求同时访问该 Key，导致这些请求直接穿透到数据库。</p>
+
+<p><strong>解决方案</strong></p>
+<ul>
+  <li>设置热点数据永不过期。</li>
+  <li>使用互斥锁或分布式锁，保证只有一个线程访问数据库，其他线程等待缓存更新完成。</li>
+  <li>异步更新缓存，先返回旧数据，再异步更新缓存。</li>
 </ul>
 
-<h3 id="获奖情况">获奖情况</h3>
+<hr />
 
-<p><img src="assets/mcm_F.png" alt="2025年美国大学生数学建模大赛F奖" /></p>
+<h3 id="缓存穿透">缓存穿透</h3>
+<p><strong>定义</strong><br />
+缓存穿透是指用户查询的数据在缓存和数据库中都不存在，导致请求直接穿透到数据库。</p>
 
-<p><img src="assets/2024cnm.png" alt="2024全国大学生数学建模大赛广东省二等奖" /></p>
+<p><strong>解决方案</strong></p>
+<ul>
+  <li>缓存空对象：将查询结果为 null 的数据缓存，并设置较短的过期时间。</li>
+  <li>参数校验：对输入参数进行校验，过滤非法请求。</li>
+  <li>布隆过滤器：使用布隆过滤器快速判断数据是否存在，避免无效请求穿透到数据库。</li>
+</ul>
 
-<p><img src="assets/2024mothercup.png" alt="2024全国大学生数学建模大赛广东省二等奖" /></p>
+<hr />
 
-<p><img src="assets/dingding.png" alt="2024年钉钉杯大学生大数据挑战赛三等奖" /></p>
+<h3 id="缓存雪崩">缓存雪崩</h3>
+<p><strong>定义</strong><br />
+缓存雪崩是指 Redis 实例宕机或大量缓存数据同时失效，导致大量请求直接打到数据库，造成数据库压力骤增甚至崩溃。</p>
 
+<p><strong>解决方案</strong></p>
+<ul>
+  <li>分散缓存过期时间：为不同数据设置不同的过期时间，避免大量缓存同时失效。</li>
+  <li>缓存预热：在系统上线前预先加载热点数据到缓存中。</li>
+  <li>多级缓存：结合本地缓存和分布式缓存，减少对数据库的直接压力。</li>
+  <li>限流与降级：限制请求频率，提供默认数据或降级服务。</li>
+</ul>
+
+<hr />
+
+<h2 id="数据库与缓存不一致问题">数据库与缓存不一致问题</h2>
+
+<h3 id="问题场景">问题场景</h3>
+<ol>
+  <li>写操作未更新缓存。</li>
+  <li>缓存过期与数据库更新不同步。</li>
+  <li>多级缓存之间的数据同步问题。</li>
+  <li>数据库异常或缓存更新失败。</li>
+</ol>
+
+<h3 id="解决方案-2">解决方案</h3>
+<ol>
+  <li>
+    <p><strong>双写策略</strong><br />
+同时更新数据库和缓存，确保两者数据一致。需要注意幂等性和重试机制。</p>
+  </li>
+  <li>
+    <p><strong>延时双删</strong><br />
+更新数据库后，先删除缓存，再延时一段时间后再次删除缓存，确保高并发情况下数据一致性。</p>
+  </li>
+  <li>
+    <p><strong>先更新数据库，再删除缓存</strong><br />
+确保数据库中的数据总是最新的，然后删除缓存中的旧数据。</p>
+  </li>
+  <li>
+    <p><strong>异步更新缓存</strong><br />
+使用消息队列或 Canal 监听 MySQL binlog，将数据库变更异步同步到缓存。</p>
+  </li>
+</ol>
+
+<hr />
+
+<h2 id="redis-延迟消息">Redis 延迟消息</h2>
+
+<h3 id="实现方式">实现方式</h3>
+<ol>
+  <li>
+    <p><strong>使用 Sorted Set</strong><br />
+将消息存储在 Sorted Set 中，分数设置为消息的执行时间戳，定期轮询处理到期消息。</p>
+  </li>
+  <li>
+    <p><strong>使用 Redis Streams</strong><br />
+利用 Redis Streams 数据结构和 Lua 脚本实现延迟消息队列。</p>
+  </li>
+  <li>
+    <p><strong>使用第三方库</strong><br />
+使用 Celery 等任务队列库，结合 Redis 实现延迟消息。</p>
+  </li>
+</ol>
+
+<hr />
+
+<h2 id="redis-的其他应用场景">Redis 的其他应用场景</h2>
+
+<ol>
+  <li>
+    <p><strong>消息队列</strong><br />
+使用 Redis 的发布/订阅功能实现简单的消息队列。</p>
+  </li>
+  <li>
+    <p><strong>分布式锁</strong><br />
+利用 Redis 的原子性操作和过期时间特性实现分布式锁。</p>
+  </li>
+  <li>
+    <p><strong>计数器</strong><br />
+使用 Redis 的自增/自减操作实现计数器功能。</p>
+  </li>
+  <li>
+    <p><strong>地理位置应用</strong><br />
+使用 Redis 的 Geo 数据结构存储和查询地理位置信息。</p>
+  </li>
+  <li>
+    <p><strong>实时排行榜</strong><br />
+利用 Redis 的有序集合实现实时排行榜。</p>
+  </li>
+</ol>
+
+<hr />
+
+<h2 id="分布式锁的实现">分布式锁的实现</h2>
+
+<h3 id="使用-setnx-实现分布式锁">使用 SETNX 实现分布式锁</h3>
+<ol>
+  <li>
+    <p><strong>原子性</strong><br />
+SETNX 确保只有一个客户端能够成功设置锁。</p>
+  </li>
+  <li>
+    <p><strong>过期时间</strong><br />
+设置锁的过期时间，防止锁被永久占用。</p>
+  </li>
+  <li>
+    <p><strong>示例代码</strong>
+```python
+import redis
+import time</p>
+  </li>
+</ol>
+
+<p>r = redis.StrictRedis(host=’localhost’, port=6379, db=0)</p>
+
+<p>def acquire_lock(lock_key, lock_timeout):
+    while True:
+        now = int(time.time())
+        lock_timeout = now + lock_timeout + 1
+        if r.setnx(lock_key, lock_timeout):
+            return True
+        elif int(r.get(lock_key)) &lt; now:
+            r.delete(lock_key)
+        else:
+            time.sleep(0.001)</p>
+
+<p>def release_lock(lock_key):
+    r.delete(lock_key)
+```</p>
 </section>
             </div><div class="search-results">
     <div class="has-results">
@@ -263,14 +461,12 @@ window.MathJax = {
     }
 </script>
 
-<a href="/erkan9527-blog/" class="navigation navigation-pre navigation-unique">
-                        <i class="fa"></i>
-                    </a>
 
-                    
-                        <a href="/erkan9527-blog" class="navigation navigation-next navigation-unique" aria-label="Next page: ">
-                            <i class="fa fa-angle-right"></i>
+                        <a href="/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-19-redis.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: Redis 数据分片、事务机制与持久化机制">
+                            <i class="fa fa-angle-left"></i>
                         </a>
+                    
+
                     
                 </div>
             </div>
@@ -283,17 +479,6 @@ window.MathJax = {
         "title": "Introduction",
         "level": "1.1",
         "depth": 1,
-        
-
-        
-        "next": {
-            "title": "Redis 集群方案",
-            "level": "1.2",
-            "depth": 1,
-            "path": "_posts/2025-07-18-redismothod.md",
-            "ref": "_posts/2025-07-18-redismothod.md",
-            "articles": []
-        },
         
         "dir": "ltr"
     },    "config": {
@@ -383,8 +568,8 @@ window.MathJax = {
         "gitbook": "*"
     },
     "file": {
-        "path": "README.md",
-        "mtime": "",
+        "path": "_posts/2025-07-19-redisuse.md",
+        "mtime": "2025-07-19 00:00:00 +0000",
         "type": "markdown"
     },
     "gitbook": {
