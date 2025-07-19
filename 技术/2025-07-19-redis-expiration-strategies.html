@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html lang="en" >
     <head><meta charset="UTF-8">
-<meta content="text/html; charset=utf-8" http-equiv="Content-Type"><title>Redis 集群方案 · Erkan9527</title><meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"><title>Redis Expiration Strategies and Memory Eviction Policies · Erkan9527</title><meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="description" content="格物致知
 "><meta name="generator" content="Jekyll (using style of GitBook 3.2.3)"><meta name="author" content="Erkan9527"><link rel="stylesheet" href="/erkan9527-blog/assets/gitbook/style.css">
 <link rel="stylesheet" href="/erkan9527-blog/assets/gitbook/gitbook-plugin-back-to-top-button/plugin.css">
@@ -25,11 +25,11 @@
 
 
 
-            <link rel="prev" href="/erkan9527-blog/" />
+            <link rel="prev" href="/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-19-redismothod.html" />
         
 
         
-            <link rel="next" href="/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-19-redis-expiration-strategies.html" />
+            <link rel="next" href="/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-19-redis.html" />
         
     </head>
     <body>
@@ -88,26 +88,26 @@
 
                         
                             
-                            <li class="chapter active" data-level="1.2" data-path="/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-19-redismothod.html">
+                            <li class="chapter" data-level="1.1" data-path="/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-19-redismothod.html">
                             
                                 <a href="/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-19-redismothod.html" onclick="pageScrollToTop(this)">
                                     Redis 集群方案
                                 </a>
                                 
                                     
-                                        <ul><li><a href="#redis-集群方案" onclick="mobilePageScrollToAnchor(this)" >Redis 集群方案</a><ul><li><a href="#redis-主从模式" onclick="mobilePageScrollToAnchor(this)" >Redis 主从模式</a></li><li><a href="#redis-哨兵模式" onclick="mobilePageScrollToAnchor(this)" >Redis 哨兵模式</a></li><li><a href="#redis-集群模式" onclick="mobilePageScrollToAnchor(this)" >Redis 集群模式</a></li><li><a href="#总结" onclick="mobilePageScrollToAnchor(this)" >总结</a></li></ul></li></ul>
-
-                                    
                                 
                             </li>
                         
                             
-                            <li class="chapter" data-level="1.1" data-path="/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-19-redis-expiration-strategies.html">
+                            <li class="chapter active" data-level="1.2" data-path="/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-19-redis-expiration-strategies.html">
                             
                                 <a href="/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-19-redis-expiration-strategies.html" onclick="pageScrollToTop(this)">
                                     Redis Expiration Strategies and Memory Eviction Policies
                                 </a>
                                 
+                                    
+                                        <ul><li><a href="#redis-expiration-strategies-and-memory-eviction-policies" onclick="mobilePageScrollToAnchor(this)" >Redis Expiration Strategies and Memory Eviction Policies</a><ul><li><a href="#redis-过期策略" onclick="mobilePageScrollToAnchor(this)" >Redis 过期策略</a><ul><li><a href="#定时删除fixed-interval-expiration" onclick="mobilePageScrollToAnchor(this)" >定时删除（Fixed Interval Expiration）</a></li><li><a href="#惰性删除lazy-expiration" onclick="mobilePageScrollToAnchor(this)" >惰性删除（Lazy Expiration）</a></li><li><a href="#混合策略combined-policy" onclick="mobilePageScrollToAnchor(this)" >混合策略（Combined Policy）</a></li></ul></li><li><a href="#redis-内存淘汰策略" onclick="mobilePageScrollToAnchor(this)" >Redis 内存淘汰策略</a><ul><li><a href="#内存淘汰策略列表" onclick="mobilePageScrollToAnchor(this)" >内存淘汰策略列表</a></li></ul></li><li><a href="#内存淘汰策略的选择" onclick="mobilePageScrollToAnchor(this)" >内存淘汰策略的选择</a></li><li><a href="#总结" onclick="mobilePageScrollToAnchor(this)" >总结</a></li></ul></li></ul>
+
                                     
                                 
                             </li>
@@ -159,7 +159,7 @@
                     <h1>
                         <i class="fa fa-circle-o-notch fa-spin"></i>
                         
-                            <a href="." >Redis 集群方案</a>
+                            <a href="." >Redis Expiration Strategies and Memory Eviction Policies</a>
                         
                     </h1>
                 </div>
@@ -172,59 +172,203 @@
             <div class="search-noresults">
                 <section class="normal markdown-section">
                     
-                        <h1 id="/%E6%8A%80%E6%9C%AF/redismothod">Redis 集群方案</h1>
+                        <h1 id="/%E6%8A%80%E6%9C%AF/redis-expiration-strategies">Redis Expiration Strategies and Memory Eviction Policies</h1>
                     
 
-                    <h1 id="redis-集群方案">Redis 集群方案</h1>
+                    <h1 id="redis-expiration-strategies-and-memory-eviction-policies">Redis Expiration Strategies and Memory Eviction Policies</h1>
 
-<p>Redis 是一种高性能的内存数据库，广泛应用于缓存、消息队列和实时数据处理等场景。随着业务规模的增长，单机 Redis 的性能和容量可能无法满足需求，因此需要采用分布式部署方案。本文记录了 Redis 主从模式、哨兵模式和集群模式的核心概念、优缺点及部署方式。</p>
-
-<hr />
-
-<h2 id="redis-主从模式">Redis 主从模式</h2>
-
-<p>主从模式是一种经典的高可用部署方案，通过主节点和从节点的复制机制实现读写分离和数据冗余。主节点负责处理所有写操作，并将数据同步到从节点。从节点主要用于处理读操作，同时作为主节点的备份。一个主节点可以有多个从节点，从节点之间互不通信。</p>
-
-<p>主从模式采用异步复制，主节点在写入数据后会异步地将数据同步到从节点。从 Redis 5.0 开始，支持部分同步（PSYNC），在网络中断后可以避免全量同步，提高效率。</p>
-
-<p>主从模式的优点包括读写分离、数据冗余和高可用性。主节点处理写操作，从节点分担读操作，适合读多写少的场景。当主节点发生故障时，可以手动或自动将从节点提升为主节点，保证服务的连续性。</p>
-
-<p>主从模式的部署相对简单，通常采用单主多从架构。主节点负责写操作，从节点分担读操作。如果需要更高的可用性，可以在主从模式的基础上引入哨兵机制。</p>
+<p>Redis 提供了灵活的过期管理策略和内存淘汰机制，用于高效管理键的生命周期和内存资源。本文记录了 Redis 的过期策略（Expiration Strategies）和内存淘汰策略（Eviction Policies）的核心概念、优缺点及适用场景。</p>
 
 <hr />
 
-<h2 id="redis-哨兵模式">Redis 哨兵模式</h2>
+<h2 id="redis-过期策略">Redis 过期策略</h2>
 
-<p>哨兵模式是在主从模式的基础上，提供的一种高可用解决方案。哨兵通过监控主从节点的状态，实现自动化的主从切换和故障恢复，减少人工干预。</p>
+<p>Redis 的过期策略用于管理带有过期时间的键，确保过期数据能够及时清理以释放内存资源。主要包括以下三种策略：</p>
 
-<p>哨兵的核心功能包括监控、自动故障转移、配置提供和通知。哨兵会持续监控主节点和从节点的运行状态，定期发送 PING 命令检测节点是否正常响应。如果某个节点长时间未响应，哨兵会将其标记为下线。当主节点发生故障时，哨兵会自动从从节点中选举一个新的主节点，并通知其他从节点更新复制目标。同时，哨兵会将新的主节点信息通知客户端，确保客户端能够继续正常工作。</p>
+<h3 id="定时删除fixed-interval-expiration">定时删除（Fixed Interval Expiration）</h3>
 
-<p>哨兵模式的架构包括主节点、从节点和哨兵节点。主节点负责写操作，从节点负责读操作并作为主节点的备份。哨兵节点是独立运行的进程，负责监控 Redis 集群的状态并执行故障转移。为了避免单点故障，通常需要部署多个哨兵节点（推荐至少 3 个）。</p>
+<p><strong>原理</strong><br />
+为每个设置了过期时间的键创建一个定时器，当键的过期时间到达时，定时器触发并立即删除该键。</p>
 
-<p>部署哨兵模式时，需要为每个哨兵节点创建配置文件，指定主节点信息和故障转移参数。启动哨兵节点后，哨兵会自动监控主从节点的状态，并在必要时执行故障转移。</p>
+<p><strong>优点</strong></p>
+<ul>
+  <li>确保内存及时释放，过期键会在设定时间点被立即移除。</li>
+  <li>避免过期数据长时间占用内存资源。</li>
+</ul>
+
+<p><strong>缺点</strong></p>
+<ul>
+  <li>创建和管理大量定时器会消耗 CPU 资源，尤其是当系统中存在大量带有过期时间的键时，CPU 负载可能显著增加。</li>
+  <li>如果定时器的精度不够高，可能导致键在预期时间之后才被删除。</li>
+</ul>
 
 <hr />
 
-<h2 id="redis-集群模式">Redis 集群模式</h2>
+<h3 id="惰性删除lazy-expiration">惰性删除（Lazy Expiration）</h3>
 
-<p>Redis 集群模式是一种分布式部署方式，用于解决单机 Redis 在数据量和并发量上的限制。通过集群模式，Redis 可以实现数据分片和高可用性，适用于大规模、高性能的分布式系统。</p>
+<p><strong>原理</strong><br />
+只有在访问某个键时，Redis 才会检查其是否已过期。如果已过期，则删除该键。</p>
 
-<p>Redis 集群将整个键空间划分为 16384 个槽（slot）。每个键通过 CRC16 哈希计算后取模，决定其所属的槽。每个节点负责一部分槽，数据分布均匀，避免单点瓶颈。集群通过主从复制实现高可用性，每个主节点可以有一个或多个从节点。当主节点发生故障时，从节点会自动提升为主节点，保证服务的连续性。</p>
+<p><strong>优点</strong></p>
+<ul>
+  <li>不会占用额外的 CPU 资源进行检查，只在键被访问时才进行处理。</li>
+  <li>对系统性能的影响较小。</li>
+</ul>
 
-<p>Redis 集群是无中心架构，每个节点都保存集群的元数据，并通过 Gossip 协议进行通信和状态同步。相比主从模式和哨兵模式，集群模式支持更大的数据量和更高的并发能力。</p>
+<p><strong>缺点</strong></p>
+<ul>
+  <li>如果键从未被访问，即使已过期，也会一直保留在内存中，导致内存浪费。</li>
+  <li>对于需要频繁访问的数据，可能会导致短时间内大量键被删除，从而影响系统性能。</li>
+</ul>
 
-<p>集群模式的优点包括水平扩展、高可用性、分布式存储和无中心架构。通过增加节点，可以轻松扩展存储容量和处理能力。主从复制和自动故障转移机制提高了系统的可靠性。分布式存储支持大规模数据存储，避免单机内存限制。无中心架构无需单点控制节点，集群更加稳定。</p>
+<hr />
 
-<p>部署 Redis 集群时，需要准备至少 6 台服务器，每台运行一个 Redis 实例。在每个 Redis 实例的配置文件中，启用集群模式并指定节点端口。启动 Redis 实例后，可以使用 <code class="language-plaintext highlighter-rouge">redis-cli</code> 创建集群，并指定主从节点的分布。</p>
+<h3 id="混合策略combined-policy">混合策略（Combined Policy）</h3>
+
+<p><strong>原理</strong><br />
+结合定时删除和惰性删除两种策略。Redis 会定期随机抽取一部分带有过期时间的键进行检查，并删除其中已过期的键；同时，在访问键时也会检查其是否已过期，如果已过期则删除该键。</p>
+
+<p><strong>优点</strong></p>
+<ul>
+  <li>既能保证过期键及时被清理，又能尽量减少对系统性能的影响。</li>
+  <li>通过合理设置扫描频率和每次扫描的耗时，可以在不同情况下平衡 CPU 和内存资源的使用。</li>
+</ul>
+
+<p><strong>缺点</strong></p>
+<ul>
+  <li>需要在 CPU 资源和内存资源之间做出权衡。</li>
+  <li>配置复杂度较高，可能需要根据具体的应用场景调整参数以获得最佳效果。</li>
+</ul>
+
+<hr />
+
+<h2 id="redis-内存淘汰策略">Redis 内存淘汰策略</h2>
+
+<p>当 Redis 使用的内存达到预设的最大限制时，内存淘汰策略决定了哪些键值对应该被删除以释放空间。Redis 提供了多种内存淘汰策略，适用于不同的场景和需求。</p>
+
+<h3 id="内存淘汰策略列表">内存淘汰策略列表</h3>
+
+<ol>
+  <li><strong>noeviction</strong>
+    <ul>
+      <li>默认策略（≥v3.0）。当内存使用达到最大限制时，Redis 拒绝新的写入操作并返回错误，仅响应读操作。</li>
+      <li>适用场景：数据保留非常重要且不能丢失，或内存充足的环境。</li>
+    </ul>
+  </li>
+  <li><strong>allkeys-lru</strong>
+    <ul>
+      <li>在所有键中使用 LRU（最近最少使用）算法进行淘汰。</li>
+      <li>适用场景：缓存应用，需要保留最近被访问的数据以便快速响应后续请求。</li>
+    </ul>
+  </li>
+  <li><strong>allkeys-lfu</strong>
+    <ul>
+      <li>在所有键中使用 LFU（最不经常使用）算法进行淘汰。</li>
+      <li>适用场景：有明显热点数据的应用，确保热点数据不被轻易淘汰。</li>
+    </ul>
+  </li>
+  <li><strong>volatile-lru</strong>
+    <ul>
+      <li>仅在设置了过期时间的键中，基于 LRU 算法淘汰数据。</li>
+      <li>适用场景：部分数据有时效性要求，仅针对设置了过期时间的键进行淘汰。</li>
+    </ul>
+  </li>
+  <li><strong>volatile-lfu</strong>
+    <ul>
+      <li>仅在设置了过期时间的键中，基于 LFU 算法淘汰数据。</li>
+      <li>适用场景：同样只针对设置了过期时间的键，但淘汰依据是访问频率。</li>
+    </ul>
+  </li>
+  <li><strong>allkeys-random</strong>
+    <ul>
+      <li>随机从所有键中淘汰数据。</li>
+      <li>适用场景：对数据淘汰无特定要求。</li>
+    </ul>
+  </li>
+  <li><strong>volatile-random</strong>
+    <ul>
+      <li>随机从设置了过期时间的键中淘汰数据。</li>
+      <li>适用场景：仅针对设置了过期时间的键进行随机淘汰。</li>
+    </ul>
+  </li>
+  <li><strong>volatile-ttl</strong>
+    <ul>
+      <li>根据键的剩余过期时间进行淘汰，越早过期的键越先被淘汰。</li>
+      <li>适用场景：缓存数据时效性要求严格。</li>
+    </ul>
+  </li>
+</ol>
+
+<hr />
+
+<h2 id="内存淘汰策略的选择">内存淘汰策略的选择</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>策略名称</th>
+      <th>适用场景</th>
+      <th>优点</th>
+      <th>缺点</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>noeviction</td>
+      <td>数据保留重要，内存充足</td>
+      <td>数据不会被淘汰</td>
+      <td>达到内存限制后无法写入新数据</td>
+    </tr>
+    <tr>
+      <td>allkeys-lru</td>
+      <td>缓存应用，保留最近访问的数据</td>
+      <td>高效淘汰冷数据</td>
+      <td>需要额外维护 LRU 数据结构</td>
+    </tr>
+    <tr>
+      <td>allkeys-lfu</td>
+      <td>热点数据明显，访问频率决定数据重要性</td>
+      <td>确保热点数据不被淘汰</td>
+      <td>需要额外维护 LFU 数据结构</td>
+    </tr>
+    <tr>
+      <td>volatile-lru</td>
+      <td>部分数据有时效性要求</td>
+      <td>仅淘汰设置了过期时间的键</td>
+      <td>仅适用于部分键有过期时间的场景</td>
+    </tr>
+    <tr>
+      <td>volatile-lfu</td>
+      <td>部分数据有时效性要求，访问频率决定淘汰顺序</td>
+      <td>结合时效性和访问频率</td>
+      <td>配置复杂度较高</td>
+    </tr>
+    <tr>
+      <td>allkeys-random</td>
+      <td>无特定淘汰要求</td>
+      <td>简单随机淘汰</td>
+      <td>数据淘汰不可控</td>
+    </tr>
+    <tr>
+      <td>volatile-random</td>
+      <td>无特定淘汰要求，针对有过期时间的键</td>
+      <td>简单随机淘汰</td>
+      <td>数据淘汰不可控</td>
+    </tr>
+    <tr>
+      <td>volatile-ttl</td>
+      <td>数据时效性要求严格</td>
+      <td>优先淘汰即将过期的数据</td>
+      <td>可能导致频繁淘汰操作</td>
+    </tr>
+  </tbody>
+</table>
 
 <hr />
 
 <h2 id="总结">总结</h2>
 
-<p>Redis 提供了多种高可用和分布式部署方案。主从模式适用于读多写少的场景，提供数据冗余和读写分离。哨兵模式在主从模式的基础上实现自动化故障恢复，适用于高可用性要求较高的系统。集群模式通过数据分片和无中心架构，解决单机性能瓶颈，适用于大规模分布式系统。</p>
-
-<p>根据业务需求选择合适的方案，可以充分发挥 Redis 的性能和优势，构建高可用、高性能的分布式系统。</p>
-
+<p>Redis 的过期策略通过定时删除、惰性删除和混合策略三种方式管理带有过期时间的键，适用于不同的场景和需求。内存淘汰策略则提供了多种方式来优化内存使用，用户可以根据具体需求选择合适的策略。在实际使用中，合理配置过期策略和内存淘汰策略，并结合监控和调优，可以显著提升 Redis 的性能和资源利用率。</p>
 </section>
             </div><div class="search-results">
     <div class="has-results">
@@ -281,13 +425,13 @@ window.MathJax = {
 </script>
 
 
-                        <a href="/erkan9527-blog/" class="navigation navigation-prev navigation-unique" aria-label="Previous page: Erkan9527">
+                        <a href="/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-19-redismothod.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: Redis 集群方案">
                             <i class="fa fa-angle-left"></i>
                         </a>
                     
 
                     
-                        <a href="/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-19-redis-expiration-strategies.html" class="navigation navigation-next navigation-unique" aria-label="Next page: Redis Expiration Strategies and Memory Eviction Policies">
+                        <a href="/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-19-redis.html" class="navigation navigation-next navigation-unique" aria-label="Next page: Redis 数据分片、事务机制与持久化机制">
                             <i class="fa fa-angle-right"></i>
                         </a>
                     
@@ -304,11 +448,11 @@ window.MathJax = {
         "depth": 1,
         
         "next": {
-            "title": "Redis Expiration Strategies and Memory Eviction Policies",
+            "title": "Redis 数据分片、事务机制与持久化机制",
             "level": "1.2",
             "depth": 1,
-            "path": "_posts/2025-07-19-redis-expiration-strategies.md",
-            "ref": "_posts/2025-07-19-redis-expiration-strategies.md",
+            "path": "_posts/2025-07-19-redis.md",
+            "ref": "_posts/2025-07-19-redis.md",
             "articles": []
         },
         
@@ -400,7 +544,7 @@ window.MathJax = {
         "gitbook": "*"
     },
     "file": {
-        "path": "_posts/2025-07-18-redismothod.md",
+        "path": "_posts/2025-07-19-redis-expiration-strategies.md",
         "mtime": "2025-07-19 00:00:00 +0000",
         "type": "markdown"
     },
