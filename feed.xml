@@ -1,192 +1,50 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://erkan9527.github.io/erkan9527-blog/feed.xml" rel="self" type="application/atom+xml" /><link href="https://erkan9527.github.io/erkan9527-blog/" rel="alternate" type="text/html" /><updated>2025-07-18T08:28:47+00:00</updated><id>https://erkan9527.github.io/erkan9527-blog/feed.xml</id><title type="html">Erkan9527’s Blog</title><subtitle>格物致知
-</subtitle><author><name>Erkan9527</name></author><entry><title type="html">如何选择合适的消息队列</title><link href="https://erkan9527.github.io/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-18-how-to-choose-message-queue.md.html" rel="alternate" type="text/html" title="如何选择合适的消息队列" /><published>2025-07-18T00:00:00+00:00</published><updated>2025-07-18T00:00:00+00:00</updated><id>https://erkan9527.github.io/erkan9527-blog/%E6%8A%80%E6%9C%AF/how-to-choose-message-queue.md</id><content type="html" xml:base="https://erkan9527.github.io/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-18-how-to-choose-message-queue.md.html"><![CDATA[<p>在现代分布式系统中，消息队列（Message Queue，MQ）是一个关键组件，用于解耦系统、提高系统的可扩展性和可靠性。然而，面对众多的消息队列技术（如 RocketMQ、Kafka、RabbitMQ、ActiveMQ、ZeroMQ 等），如何选择适合自己业务场景的 MQ 是一个重要的问题。</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://erkan9527.github.io/erkan9527-blog/feed.xml" rel="self" type="application/atom+xml" /><link href="https://erkan9527.github.io/erkan9527-blog/" rel="alternate" type="text/html" /><updated>2025-07-19T02:52:08+00:00</updated><id>https://erkan9527.github.io/erkan9527-blog/feed.xml</id><title type="html">Erkan9527’s Blog</title><subtitle>格物致知
+</subtitle><author><name>Erkan9527</name></author><entry><title type="html">Redis 集群方案</title><link href="https://erkan9527.github.io/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-19-redismothod.html" rel="alternate" type="text/html" title="Redis 集群方案" /><published>2025-07-19T00:00:00+00:00</published><updated>2025-07-19T00:00:00+00:00</updated><id>https://erkan9527.github.io/erkan9527-blog/%E6%8A%80%E6%9C%AF/redismothod</id><content type="html" xml:base="https://erkan9527.github.io/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-19-redismothod.html"><![CDATA[<h1 id="redis-集群方案">Redis 集群方案</h1>
 
-<h3 id="1-消息队列的核心功能">1. 消息队列的核心功能</h3>
-<p>在选择消息队列之前，我们需要明确消息队列的核心功能和作用：</p>
-<ul>
-  <li><strong>解耦</strong>：通过消息队列，生产者和消费者可以独立开发、部署和扩展。</li>
-  <li><strong>异步处理</strong>：允许生产者快速完成任务，将耗时操作交给消费者异步处理。</li>
-  <li><strong>流量削峰</strong>：在高并发场景下，消息队列可以缓冲流量，保护后端系统。</li>
-  <li><strong>可靠性</strong>：确保消息不会丢失，支持事务和持久化。</li>
-  <li><strong>顺序性</strong>：在某些场景下，严格的消息顺序是业务的核心需求。</li>
-</ul>
+<p>Redis 是一种高性能的内存数据库，广泛应用于缓存、消息队列和实时数据处理等场景。随着业务规模的增长，单机 Redis 的性能和容量可能无法满足需求，因此需要采用分布式部署方案。本文记录了 Redis 主从模式、哨兵模式和集群模式的核心概念、优缺点及部署方式。</p>
 
-<h3 id="2-消息队列的选型维度">2. 消息队列的选型维度</h3>
-<p>在实际选型中，可以从以下几个维度进行分析：</p>
+<hr />
 
-<h4 id="21-性能">2.1 性能</h4>
-<p>性能是消息队列选型的一个重要指标，主要包括：</p>
-<ul>
-  <li><strong>吞吐量</strong>：每秒能够处理的消息数量。</li>
-  <li><strong>延迟</strong>：消息从生产者到消费者的传递时间。</li>
-  <li><strong>并发能力</strong>：支持的并发连接数和队列数量。</li>
-</ul>
+<h2 id="redis-主从模式">Redis 主从模式</h2>
 
-<p>例如：</p>
-<ul>
-  <li>Kafka 的单机吞吐量可以达到百万级，适合高吞吐量场景。</li>
-  <li>RocketMQ 的吞吐量稍低，但在集群模式下可以弥补。</li>
-</ul>
+<p>主从模式是一种经典的高可用部署方案，通过主节点和从节点的复制机制实现读写分离和数据冗余。主节点负责处理所有写操作，并将数据同步到从节点。从节点主要用于处理读操作，同时作为主节点的备份。一个主节点可以有多个从节点，从节点之间互不通信。</p>
 
-<h4 id="22-数据一致性">2.2 数据一致性</h4>
-<p>在某些场景（如金融交易）中，数据一致性是至关重要的。需要考虑：</p>
-<ul>
-  <li><strong>消息的顺序性</strong>：是否能够严格保证消息的顺序。</li>
-  <li><strong>事务支持</strong>：是否支持分布式事务。</li>
-</ul>
+<p>主从模式采用异步复制，主节点在写入数据后会异步地将数据同步到从节点。从 Redis 5.0 开始，支持部分同步（PSYNC），在网络中断后可以避免全量同步，提高效率。</p>
 
-<p>例如：</p>
-<ul>
-  <li>Kafka 的分区机制导致无法严格保证消息顺序。</li>
-  <li>RocketMQ 支持事务消息，能够保证严格的顺序性。</li>
-</ul>
+<p>主从模式的优点包括读写分离、数据冗余和高可用性。主节点处理写操作，从节点分担读操作，适合读多写少的场景。当主节点发生故障时，可以手动或自动将从节点提升为主节点，保证服务的连续性。</p>
 
-<h4 id="23-可用性和扩展性">2.3 可用性和扩展性</h4>
-<ul>
-  <li><strong>集群支持</strong>：是否支持分布式部署，是否易于扩展。</li>
-  <li><strong>高可用性</strong>：是否支持主从架构、故障自动切换。</li>
-</ul>
+<p>主从模式的部署相对简单，通常采用单主多从架构。主节点负责写操作，从节点分担读操作。如果需要更高的可用性，可以在主从模式的基础上引入哨兵机制。</p>
 
-<p>例如：</p>
-<ul>
-  <li>RabbitMQ 支持镜像队列，提供高可用性。</li>
-  <li>Kafka 和 RocketMQ 都支持分布式部署，扩展性较好。</li>
-</ul>
+<hr />
 
-<h4 id="24-社区活跃度和生态">2.4 社区活跃度和生态</h4>
-<ul>
-  <li><strong>社区支持</strong>：社区是否活跃，是否有丰富的文档和案例。</li>
-  <li><strong>生态系统</strong>：是否有丰富的插件和工具支持。</li>
-</ul>
+<h2 id="redis-哨兵模式">Redis 哨兵模式</h2>
 
-<p>例如：</p>
-<ul>
-  <li>Kafka 社区活跃度高，生态系统完善。</li>
-  <li>RabbitMQ 的文档和社区支持也非常丰富。</li>
-</ul>
+<p>哨兵模式是在主从模式的基础上，提供的一种高可用解决方案。哨兵通过监控主从节点的状态，实现自动化的主从切换和故障恢复，减少人工干预。</p>
 
-<h4 id="25-功能特性">2.5 功能特性</h4>
-<ul>
-  <li><strong>协议支持</strong>：是否支持标准协议（如 AMQP、MQTT）。</li>
-  <li><strong>管理工具</strong>：是否提供可视化管理界面，便于运维。</li>
-</ul>
+<p>哨兵的核心功能包括监控、自动故障转移、配置提供和通知。哨兵会持续监控主节点和从节点的运行状态，定期发送 PING 命令检测节点是否正常响应。如果某个节点长时间未响应，哨兵会将其标记为下线。当主节点发生故障时，哨兵会自动从从节点中选举一个新的主节点，并通知其他从节点更新复制目标。同时，哨兵会将新的主节点信息通知客户端，确保客户端能够继续正常工作。</p>
 
-<p>例如：</p>
-<ul>
-  <li>RabbitMQ 支持 AMQP 协议，且提供友好的管理界面。</li>
-  <li>Kafka 和 RocketMQ 提供 CLI 工具和部分可视化工具。</li>
-</ul>
+<p>哨兵模式的架构包括主节点、从节点和哨兵节点。主节点负责写操作，从节点负责读操作并作为主节点的备份。哨兵节点是独立运行的进程，负责监控 Redis 集群的状态并执行故障转移。为了避免单点故障，通常需要部署多个哨兵节点（推荐至少 3 个）。</p>
 
-<h3 id="3-不同场景下的选型建议">3. 不同场景下的选型建议</h3>
+<p>部署哨兵模式时，需要为每个哨兵节点创建配置文件，指定主节点信息和故障转移参数。启动哨兵节点后，哨兵会自动监控主从节点的状态，并在必要时执行故障转移。</p>
 
-<h4 id="31-高吞吐量场景">3.1 高吞吐量场景</h4>
-<p>如果你的业务需要处理海量数据（如日志收集、实时分析），可以选择 Kafka：</p>
-<ul>
-  <li>优点：高吞吐量、分布式架构、生态完善。</li>
-  <li>缺点：不支持严格的消息顺序。</li>
-</ul>
+<hr />
 
-<h4 id="32-金融交易场景">3.2 金融交易场景</h4>
-<p>如果你的业务对数据一致性和顺序性要求极高（如支付、订单系统），可以选择 RocketMQ：</p>
-<ul>
-  <li>优点：支持事务消息、严格的顺序性。</li>
-  <li>缺点：单机吞吐量稍低。</li>
-</ul>
+<h2 id="redis-集群模式">Redis 集群模式</h2>
 
-<h4 id="33-简单任务队列">3.3 简单任务队列</h4>
-<p>如果你的业务场景较为简单（如任务调度、异步处理），可以选择 RabbitMQ：</p>
-<ul>
-  <li>优点：成熟稳定、支持多种协议、管理界面友好。</li>
-  <li>缺点：吞吐量较低，不适合大数据场景。</li>
-</ul>
+<p>Redis 集群模式是一种分布式部署方式，用于解决单机 Redis 在数据量和并发量上的限制。通过集群模式，Redis 可以实现数据分片和高可用性，适用于大规模、高性能的分布式系统。</p>
 
-<h4 id="34-高性能点对点通信">3.4 高性能点对点通信</h4>
-<p>如果你的业务需要极低的延迟和高性能（如实时通信），可以选择 ZeroMQ：</p>
-<ul>
-  <li>优点：低延迟、高性能。</li>
-  <li>缺点：功能较少，不支持持久化和事务。</li>
-</ul>
+<p>Redis 集群将整个键空间划分为 16384 个槽（slot）。每个键通过 CRC16 哈希计算后取模，决定其所属的槽。每个节点负责一部分槽，数据分布均匀，避免单点瓶颈。集群通过主从复制实现高可用性，每个主节点可以有一个或多个从节点。当主节点发生故障时，从节点会自动提升为主节点，保证服务的连续性。</p>
 
-<h3 id="4-综合对比表格">4. 综合对比表格</h3>
+<p>Redis 集群是无中心架构，每个节点都保存集群的元数据，并通过 Gossip 协议进行通信和状态同步。相比主从模式和哨兵模式，集群模式支持更大的数据量和更高的并发能力。</p>
 
-<table>
-  <thead>
-    <tr>
-      <th>对比点</th>
-      <th>ActiveMQ</th>
-      <th>RabbitMQ</th>
-      <th>RocketMQ</th>
-      <th>Kafka</th>
-      <th>ZeroMQ</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><strong>成熟度</strong></td>
-      <td>高</td>
-      <td>高</td>
-      <td>中</td>
-      <td>高</td>
-      <td>低</td>
-    </tr>
-    <tr>
-      <td><strong>吞吐量</strong></td>
-      <td>万级</td>
-      <td>万级</td>
-      <td>十万级</td>
-      <td>百万级</td>
-      <td>十万级</td>
-    </tr>
-    <tr>
-      <td><strong>顺序性</strong></td>
-      <td>不严格</td>
-      <td>不严格</td>
-      <td>严格</td>
-      <td>不严格</td>
-      <td>无法保障</td>
-    </tr>
-    <tr>
-      <td><strong>事务支持</strong></td>
-      <td>支持</td>
-      <td>不支持</td>
-      <td>支持</td>
-      <td>不支持</td>
-      <td>不支持</td>
-    </tr>
-    <tr>
-      <td><strong>协议支持</strong></td>
-      <td>多</td>
-      <td>AMQP</td>
-      <td>自定义协议</td>
-      <td>自定义协议</td>
-      <td>TCP/UDP</td>
-    </tr>
-    <tr>
-      <td><strong>管理界面</strong></td>
-      <td>一般</td>
-      <td>好</td>
-      <td>可视化管理</td>
-      <td>一般</td>
-      <td>无</td>
-    </tr>
-    <tr>
-      <td><strong>适用场景</strong></td>
-      <td>通用</td>
-      <td>任务队列</td>
-      <td>金融交易</td>
-      <td>大数据处理</td>
-      <td>实时通信</td>
-    </tr>
-  </tbody>
-</table>
+<p>集群模式的优点包括水平扩展、高可用性、分布式存储和无中心架构。通过增加节点，可以轻松扩展存储容量和处理能力。主从复制和自动故障转移机制提高了系统的可靠性。分布式存储支持大规模数据存储，避免单机内存限制。无中心架构无需单点控制节点，集群更加稳定。</p>
 
-<h3 id="5-总结">5. 总结</h3>
-<p>没有完美的消息队列，只有最适合的消息队列。选型时需要结合业务需求，综合考虑性能、数据一致性、可用性、生态系统等因素。以下是一些建议：</p>
-<ul>
-  <li>如果需要高吞吐量和分布式架构，选择 Kafka。</li>
-  <li>如果需要严格的顺序性和事务支持，选择 RocketMQ。</li>
-  <li>如果需要简单易用的任务队列，选择 RabbitMQ。</li>
-  <li>如果需要极低延迟的通信，选择 ZeroMQ。</li>
-</ul>
+<p>部署 Redis 集群时，需要准备至少 6 台服务器，每台运行一个 Redis 实例。在每个 Redis 实例的配置文件中，启用集群模式并指定节点端口。启动 Redis 实例后，可以使用 <code class="language-plaintext highlighter-rouge">redis-cli</code> 创建集群，并指定主从节点的分布。</p>
 
-<p>最终，技术选型的核心是“合适”二字，只有充分理解业务需求，才能做出最优的决策。</p>]]></content><author><name>Erkan9527</name></author><category term="技术" /><summary type="html"><![CDATA[在现代分布式系统中，消息队列（Message Queue，MQ）是一个关键组件，用于解耦系统、提高系统的可扩展性和可靠性。然而，面对众多的消息队列技术（如 RocketMQ、Kafka、RabbitMQ、ActiveMQ、ZeroMQ 等），如何选择适合自己业务场景的 MQ 是一个重要的问题。]]></summary></entry></feed>
+<hr />
+
+<h2 id="总结">总结</h2>
+
+<p>Redis 提供了多种高可用和分布式部署方案。主从模式适用于读多写少的场景，提供数据冗余和读写分离。哨兵模式在主从模式的基础上实现自动化故障恢复，适用于高可用性要求较高的系统。集群模式通过数据分片和无中心架构，解决单机性能瓶颈，适用于大规模分布式系统。</p>
+
+<p>根据业务需求选择合适的方案，可以充分发挥 Redis 的性能和优势，构建高可用、高性能的分布式系统。</p>]]></content><author><name>Erkan9527</name></author><category term="技术" /><summary type="html"><![CDATA[Redis 集群方案]]></summary></entry></feed>
