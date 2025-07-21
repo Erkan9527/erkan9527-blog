@@ -1,5 +1,49 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://erkan9527.github.io/erkan9527-blog/feed.xml" rel="self" type="application/atom+xml" /><link href="https://erkan9527.github.io/erkan9527-blog/" rel="alternate" type="text/html" /><updated>2025-07-21T02:10:02+00:00</updated><id>https://erkan9527.github.io/erkan9527-blog/feed.xml</id><title type="html">Erkan9527</title><subtitle>格物致知
-</subtitle><author><name>Erkan9527</name></author><entry><title type="html">Redis 集群方案</title><link href="https://erkan9527.github.io/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-19-redismothod.html" rel="alternate" type="text/html" title="Redis 集群方案" /><published>2025-07-19T00:00:00+00:00</published><updated>2025-07-19T00:00:00+00:00</updated><id>https://erkan9527.github.io/erkan9527-blog/%E6%8A%80%E6%9C%AF/redismothod</id><content type="html" xml:base="https://erkan9527.github.io/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-19-redismothod.html"><![CDATA[<h1 id="redis-集群方案">Redis 集群方案</h1>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://erkan9527.github.io/erkan9527-blog/feed.xml" rel="self" type="application/atom+xml" /><link href="https://erkan9527.github.io/erkan9527-blog/" rel="alternate" type="text/html" /><updated>2025-07-21T02:57:52+00:00</updated><id>https://erkan9527.github.io/erkan9527-blog/feed.xml</id><title type="html">Erkan9527</title><subtitle>格物致知
+</subtitle><author><name>Erkan9527</name></author><entry><title type="html">TCP/IP网络模型</title><link href="https://erkan9527.github.io/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-21-TCPIP.html" rel="alternate" type="text/html" title="TCP/IP网络模型" /><published>2025-07-21T00:00:00+00:00</published><updated>2025-07-21T00:00:00+00:00</updated><id>https://erkan9527.github.io/erkan9527-blog/%E6%8A%80%E6%9C%AF/TCPIP</id><content type="html" xml:base="https://erkan9527.github.io/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-21-TCPIP.html"><![CDATA[<h2 id="tcpip-模型的核心概念">TCP/IP 模型的核心概念</h2>
+
+<p>TCP/IP 模型通过分层结构实现网络通信的抽象与模块化。每一层负责特定功能，层与层之间协作，最终实现端到端的数据传输。</p>
+
+<h3 id="关键点">关键点：</h3>
+<ol>
+  <li><strong>发送过程</strong>：数据从上层向下传递，每一层都会添加控制信息（即“首部”header），形成逐层封装的结构。</li>
+  <li><strong>接收过程</strong>：数据从下层向上传递，每一层解析并移除自己的首部，最终还原为原始数据。</li>
+</ol>
+
+<hr />
+
+<h3 id="数据通信流程">数据通信流程</h3>
+
+<p><img src="assets/networkmode.png" alt="通信过程" /></p>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gh">发送端（A）                ↓ 数据封装顺序
+-------------------------------------------------------
+</span>应用层       ← 你要发的内容（如网页请求 GET /index.html）
+传输层       ← 加上 TCP/UDP 头（端口号、序列号等）
+网络层       ← 加上 IP 头（源IP、目标IP等）
+网络接口层   ← 加上 MAC 头尾（源MAC、目标MAC等）
+<span class="gh">物理层       ← 转换成 0/1 电信号或无线信号发送出去
+-------------------------------------------------------
+</span>
+</code></pre></div></div>
+
+<h4 id="发送端封装">发送端（封装）：</h4>
+<ol>
+  <li><strong>应用层</strong>：生成用户数据。</li>
+  <li><strong>传输层</strong>：添加传输层首部（如 TCP/UDP 头）。</li>
+  <li><strong>网络层</strong>：添加网络层首部（如 IP 头）。</li>
+  <li><strong>链路层</strong>：添加链路层首部和尾部（如 MAC 头/尾）。</li>
+  <li><strong>最终形成帧</strong>：帧中包含包，包中包含段，段中是数据。</li>
+</ol>
+
+<h4 id="接收端解封装">接收端（解封装）：</h4>
+<ol>
+  <li><strong>链路层</strong>：移除 MAC 头/尾。</li>
+  <li><strong>网络层</strong>：移除 IP 头。</li>
+  <li><strong>传输层</strong>：移除 TCP/UDP 头。</li>
+  <li><strong>应用层</strong>：还原为原始数据。</li>
+</ol>
+
+<hr />]]></content><author><name>Erkan9527</name></author><category term="技术" /><summary type="html"><![CDATA[TCP/IP 模型的核心概念]]></summary></entry><entry><title type="html">Redis 集群方案</title><link href="https://erkan9527.github.io/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-19-redismothod.html" rel="alternate" type="text/html" title="Redis 集群方案" /><published>2025-07-19T00:00:00+00:00</published><updated>2025-07-19T00:00:00+00:00</updated><id>https://erkan9527.github.io/erkan9527-blog/%E6%8A%80%E6%9C%AF/redismothod</id><content type="html" xml:base="https://erkan9527.github.io/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-19-redismothod.html"><![CDATA[<h1 id="redis-集群方案">Redis 集群方案</h1>
 
 <p>Redis 是一种高性能的内存数据库，广泛应用于缓存、消息队列和实时数据处理等场景。随着业务规模的增长，单机 Redis 的性能和容量可能无法满足需求，因此需要采用分布式部署方案。本文记录了 Redis 主从模式、哨兵模式和集群模式的核心概念、优缺点及部署方式。</p>
 
