@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://erkan9527.github.io/erkan9527-blog/feed.xml" rel="self" type="application/atom+xml" /><link href="https://erkan9527.github.io/erkan9527-blog/" rel="alternate" type="text/html" /><updated>2025-07-20T02:02:18+00:00</updated><id>https://erkan9527.github.io/erkan9527-blog/feed.xml</id><title type="html">Erkan9527</title><subtitle>格物致知
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://erkan9527.github.io/erkan9527-blog/feed.xml" rel="self" type="application/atom+xml" /><link href="https://erkan9527.github.io/erkan9527-blog/" rel="alternate" type="text/html" /><updated>2025-07-21T02:10:02+00:00</updated><id>https://erkan9527.github.io/erkan9527-blog/feed.xml</id><title type="html">Erkan9527</title><subtitle>格物致知
 </subtitle><author><name>Erkan9527</name></author><entry><title type="html">Redis 集群方案</title><link href="https://erkan9527.github.io/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-19-redismothod.html" rel="alternate" type="text/html" title="Redis 集群方案" /><published>2025-07-19T00:00:00+00:00</published><updated>2025-07-19T00:00:00+00:00</updated><id>https://erkan9527.github.io/erkan9527-blog/%E6%8A%80%E6%9C%AF/redismothod</id><content type="html" xml:base="https://erkan9527.github.io/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-19-redismothod.html"><![CDATA[<h1 id="redis-集群方案">Redis 集群方案</h1>
 
 <p>Redis 是一种高性能的内存数据库，广泛应用于缓存、消息队列和实时数据处理等场景。随着业务规模的增长，单机 Redis 的性能和容量可能无法满足需求，因此需要采用分布式部署方案。本文记录了 Redis 主从模式、哨兵模式和集群模式的核心概念、优缺点及部署方式。</p>
@@ -722,4 +722,381 @@ SETNX 确保只有一个客户端能够成功设置锁。</p>
 
 <span class="k">def</span> <span class="nf">release_lock</span><span class="p">(</span><span class="n">lock_key</span><span class="p">):</span>
     <span class="n">r</span><span class="p">.</span><span class="nf">delete</span><span class="p">(</span><span class="n">lock_key</span><span class="p">)</span>
-</code></pre></div></div>]]></content><author><name>Erkan9527</name></author><category term="技术" /><summary type="html"><![CDATA[Redis 是一种高性能的内存数据库，广泛应用于缓存、分布式锁、消息队列等场景。然而，在实际使用中，可能会遇到一些常见问题，如热 Key、大 Key、缓存击穿、缓存穿透、缓存雪崩等。本文将对这些问题进行总结，并提供相应的解决方案。]]></summary></entry></feed>
+</code></pre></div></div>]]></content><author><name>Erkan9527</name></author><category term="技术" /><summary type="html"><![CDATA[Redis 是一种高性能的内存数据库，广泛应用于缓存、分布式锁、消息队列等场景。然而，在实际使用中，可能会遇到一些常见问题，如热 Key、大 Key、缓存击穿、缓存穿透、缓存雪崩等。本文将对这些问题进行总结，并提供相应的解决方案。]]></summary></entry><entry><title type="html">Netty面试题目</title><link href="https://erkan9527.github.io/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-19-netty.html" rel="alternate" type="text/html" title="Netty面试题目" /><published>2025-07-19T00:00:00+00:00</published><updated>2025-07-19T00:00:00+00:00</updated><id>https://erkan9527.github.io/erkan9527-blog/%E6%8A%80%E6%9C%AF/netty</id><content type="html" xml:base="https://erkan9527.github.io/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-19-netty.html"><![CDATA[<h1 id="为什么netty适合做网络编程">为什么Netty适合做网络编程？</h1>
+
+<p>Netty 是一个基于 Java 的高性能网络编程框架，广泛应用于构建可扩展、高性能的网络应用程序。以下从多个角度分析 Netty 的优势：</p>
+
+<h3 id="1-强大的抽象与组件">1. 强大的抽象与组件</h3>
+<p>Netty 提供了一套高度抽象且可重用的组件体系，包括事件模型、处理器链、编解码器等。这些组件设计灵活，开发者可以根据需求自由组合与定制，从而显著降低网络编程的复杂度。</p>
+
+<h3 id="2-高性能架构">2. 高性能架构</h3>
+<p>Netty 基于事件驱动的异步非阻塞 I/O 模型，充分利用了 Java NIO 的特性，能够高效处理大量并发连接。此外，其线程模型和内存管理机制经过深度优化，能够显著提升网络应用的吞吐量和性能。</p>
+
+<h3 id="3-丰富的协议支持">3. 丰富的协议支持</h3>
+<p>Netty 内置了对多种协议的支持，包括 TCP、UDP、HTTP 和 WebSocket 等。其内置的协议编解码器可以轻松完成协议解析与编码，极大简化了开发流程。</p>
+
+<h3 id="4-优秀的可扩展性">4. 优秀的可扩展性</h3>
+<p>Netty 的设计高度灵活，支持自定义协议、编解码器和处理器。通过丰富的扩展点与钩子函数，开发者可以轻松实现功能扩展，满足复杂的业务需求。</p>
+
+<h3 id="5-成熟稳定的生态">5. 成熟稳定的生态</h3>
+<p>作为一个成熟的开源项目，Netty 已经过广泛的实际应用验证。其活跃的社区和完善的生态系统为开发者提供了丰富的文档、示例和工具，降低了学习成本并提升了开发效率。</p>
+
+<hr />
+
+<h3 id="netty-性能优势分析">Netty 性能优势分析</h3>
+
+<p>Netty 是一个高性能的网络应用框架，其卓越性能主要体现在以下几个方面：</p>
+
+<h4 id="1-异步非阻塞-io-模型">1. 异步非阻塞 I/O 模型</h4>
+<p>Netty 基于异步非阻塞的 I/O 模型，能够高效处理大量并发连接，而无需为每个连接分配独立线程。这种设计显著减少了线程切换的开销，从而提升了系统的吞吐量和响应速度。</p>
+
+<h4 id="2-高度可定制化">2. 高度可定制化</h4>
+<p>Netty 提供了丰富的可定制化选项，开发者可以根据需求灵活配置编解码器、处理器链和线程模型等组件，以适应不同的网络应用场景。</p>
+
+<h4 id="3-零拷贝技术">3. 零拷贝技术</h4>
+<p>Netty 支持零拷贝技术，避免了数据在内存中的多次拷贝操作，从而减少了内存使用和数据传输的开销。这一特性显著提升了数据传输效率。</p>
+
+<h4 id="4-内存管理优化">4. 内存管理优化</h4>
+<p>通过内存池技术，Netty 实现了内存的高效复用，减少了频繁的内存分配和回收操作，从而提高了内存利用率和整体性能。</p>
+
+<h4 id="5-模块化设计">5. 模块化设计</h4>
+<p>Netty 的模块化设计使各功能模块之间高度解耦，开发者可以根据需求选择性地使用特定模块，避免了不必要的性能损耗。</p>
+
+<hr />
+
+<h3 id="netty-的零拷贝实现">Netty 的零拷贝实现</h3>
+
+<p>Netty 的零拷贝技术通过以下两种方式实现：</p>
+
+<h4 id="1-零拷贝文件传输">1. 零拷贝文件传输</h4>
+<p>Netty 利用操作系统提供的零拷贝机制（如 Linux 下的 <code class="language-plaintext highlighter-rouge">sendfile</code> 和 <code class="language-plaintext highlighter-rouge">splice</code> 系统调用），直接将文件数据从磁盘传输到网络套接字，避免了用户空间和内核空间之间的数据拷贝。</p>
+
+<h4 id="2-零拷贝内存传输">2. 零拷贝内存传输</h4>
+<p>Netty 使用 Direct Memory Buffer（直接内存缓冲区）实现零拷贝内存传输。直接内存缓冲区分配在堆外内存中，可以通过操作系统的文件描述符直接读写数据，避免了用户空间和内核空间之间的拷贝。</p>
+
+<p><strong>注意</strong>：尽管零拷贝技术可以显著减少数据拷贝次数，但在某些场景下（如数据解码和编码）仍可能需要少量数据拷贝操作。</p>
+
+<hr />
+
+<h3 id="netty-的无锁化设计">Netty 的无锁化设计</h3>
+
+<p>Netty 在多线程环境下通过以下技术实现无锁化设计，减少锁竞争和线程阻塞，从而提升并发性能：</p>
+
+<h4 id="1-并发容器">1. 并发容器</h4>
+<p>Netty 使用并发容器（如 <code class="language-plaintext highlighter-rouge">ConcurrentMap</code> 和 <code class="language-plaintext highlighter-rouge">ConcurrentLinkedQueue</code>）替代传统线程安全集合。这些容器基于 CAS（Compare and Swap）等无锁算法实现线程安全。</p>
+
+<h4 id="2-原子操作">2. 原子操作</h4>
+<p>通过 Java 提供的原子类（如 <code class="language-plaintext highlighter-rouge">AtomicBoolean</code> 和 <code class="language-plaintext highlighter-rouge">AtomicInteger</code>），Netty 实现了对共享数据的无锁访问，避免了线程间的锁竞争。</p>
+
+<h4 id="3-事件驱动模型">3. 事件驱动模型</h4>
+<p>Netty 基于事件驱动模型，通过事件的发布和订阅实现线程间的解耦。每个线程只需处理自身感兴趣的事件，从而避免了锁竞争并提升并发性能。</p>
+
+<h4 id="4-非阻塞-io">4. 非阻塞 I/O</h4>
+<p>Netty 使用非阻塞 I/O 模型，通过异步方式处理网络 I/O 操作，避免了线程在等待 I/O 完成时的阻塞。</p>
+
+<p><strong>总结</strong>：Netty 的无锁化设计通过并发容器、原子操作、事件驱动模型和非阻塞 I/O 等技术手段，显著提升了系统的并发性能和可伸缩性，同时减少了线程竞争和潜在的性能瓶颈。</p>
+
+<hr />
+
+<h3 id="netty-的线程模型">Netty 的线程模型</h3>
+
+<p>Netty 的线程模型基于事件驱动，采用多线程池架构来高效处理网络请求和事件。以下是其主要特点和工作机制：</p>
+
+<h4 id="1-boss-线程池acceptors">1. <strong>Boss 线程池（Acceptors）</strong></h4>
+<ul>
+  <li>负责监听端口并接受客户端的连接请求。</li>
+  <li>每个 Boss 线程绑定一个独立的套接字（Socket），用于处理新的连接。</li>
+  <li>接受连接后，将连接分配给 Worker 线程池进行后续处理。</li>
+</ul>
+
+<h4 id="2-worker-线程池eventloopgroup">2. <strong>Worker 线程池（EventLoopGroup）</strong></h4>
+<ul>
+  <li>负责处理已建立连接的 I/O 事件（如读写操作）和用户定义的业务逻辑。</li>
+  <li>Worker 线程池中的每个线程可以处理多个连接，通过事件循环（EventLoop）机制高效管理这些连接。</li>
+</ul>
+
+<h4 id="3-eventloop事件循环">3. <strong>EventLoop（事件循环）</strong></h4>
+<ul>
+  <li>每个 Worker 线程包含一个 EventLoop，负责从事件队列中获取事件并执行相应操作。</li>
+  <li>每个连接被分配到一个特定的 EventLoop，确保事件处理的顺序性和线程安全。</li>
+</ul>
+
+<h4 id="4-任务队列">4. <strong>任务队列</strong></h4>
+<ul>
+  <li>用于存储需要处理的事件（如 I/O 操作、用户自定义任务等）。</li>
+  <li>EventLoop 从任务队列中取出事件并依次执行，保证事件的顺序性。</li>
+</ul>
+
+<hr />
+
+<h3 id="工作机制">工作机制</h3>
+
+<ol>
+  <li><strong>连接建立</strong>：
+    <ul>
+      <li>客户端发起连接请求，Boss 线程池中的某个线程接受连接。</li>
+      <li>Boss 线程将连接分配给 Worker 线程池中的某个线程。</li>
+    </ul>
+  </li>
+  <li><strong>事件处理</strong>：
+    <ul>
+      <li>Worker 线程通过 EventLoop 处理连接上的 I/O 事件（如读写操作）。</li>
+      <li>每个 EventLoop 负责管理多个连接，确保事件处理的顺序性和线程安全。</li>
+    </ul>
+  </li>
+  <li><strong>任务执行</strong>：
+    <ul>
+      <li>用户自定义任务或其他事件被添加到任务队列中。</li>
+      <li>EventLoop 从任务队列中取出任务并执行。</li>
+    </ul>
+  </li>
+  <li><strong>高效并发</strong>：
+    <ul>
+      <li>多个连接共享 Worker 线程，避免了线程创建和销毁的开销。</li>
+      <li>通过事件驱动模型和任务队列，Netty 能够高效处理大量并发连接。</li>
+    </ul>
+  </li>
+</ol>
+
+<hr />
+
+<h3 id="总结">总结</h3>
+
+<p>Netty 的线程模型通过 Boss 线程池、Worker 线程池和事件循环机制，实现了高效的连接管理和事件处理。其设计充分利用了多线程和事件驱动的优势，适用于构建高性能、可扩展的网络应用程序。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>+-------------------+       +-------------------+
+|   Client Socket   |       |   Client Socket   |
++-------------------+       +-------------------+
+           |                         |
+           v                         v
++-------------------+       +-------------------+
+|   Boss Thread 1   |       |   Boss Thread 2   |
++-------------------+       +-------------------+
+           |                         |
+           +-----------+-------------+
+                       |
+                       v
+             +-------------------+
+             |   Worker Threads  |
+             |  (EventLoopGroup) |
+             +-------------------+
+                       |
+       +---------------+---------------+
+       |                               |
+       v                               v
++-------------------+       +-------------------+
+|   EventLoop 1     |       |   EventLoop 2     |
++-------------------+       +-------------------+
+       |                               |
+       v                               v
++-------------------+       +-------------------+
+|  Connection 1     |       |  Connection 2     |
+|  Connection 2     |       |  Connection 3     |
++-------------------+       +-------------------+
+</code></pre></div></div>
+
+<hr />
+
+<h3 id="netty-如何解决-tcp-粘包拆包问题">Netty 如何解决 TCP 粘包、拆包问题？</h3>
+
+<p>在网络传输中，TCP 粘包和拆包问题是常见的挑战。Netty 提供了多种机制来解决这些问题，确保数据能够正确地分割和组装。以下是 Netty 的常见解决方案：</p>
+
+<h4 id="1-固定长度解码器fixedlengthframedecoder">1. <strong>固定长度解码器（FixedLengthFrameDecoder）</strong></h4>
+<ul>
+  <li>按照指定的固定长度对接收到的数据进行切割。</li>
+  <li>无论数据内容如何，都会按照固定长度拆分，确保每个数据包的长度一致。</li>
+</ul>
+
+<h4 id="2-行尾分隔符解码器linebasedframedecoder">2. <strong>行尾分隔符解码器（LineBasedFrameDecoder）</strong></h4>
+<ul>
+  <li>适用于基于文本协议的场景。</li>
+  <li>根据行尾分隔符（如换行符 <code class="language-plaintext highlighter-rouge">\n</code>）将数据切分为不同的数据包，每个数据包包含一行完整的文本。</li>
+</ul>
+
+<h4 id="3-分隔符解码器delimiterbasedframedecoder">3. <strong>分隔符解码器（DelimiterBasedFrameDecoder）</strong></h4>
+<ul>
+  <li>支持自定义分隔符。</li>
+  <li>开发者可以指定特定的字节序列作为分隔符，用于切分数据。</li>
+</ul>
+
+<h4 id="4-自定义解码器">4. <strong>自定义解码器</strong></h4>
+<ul>
+  <li>根据具体的协议和业务需求，开发者可以创建自定义解码器。</li>
+  <li>自定义解码器可以灵活处理复杂的数据分割和组装逻辑。</li>
+</ul>
+
+<p><strong>总结</strong>：这些解码器通常作为 <code class="language-plaintext highlighter-rouge">ChannelPipeline</code> 的一部分，开发者可以根据需求选择合适的解码器，或结合多种解码器处理不同类型的数据。在复杂场景下，可能需要额外的调优和处理。</p>
+
+<hr />
+
+<h3 id="netty-的-buffer-为什么好用">Netty 的 Buffer 为什么好用？</h3>
+
+<p>Netty 的 Buffer 是网络编程中的核心工具，其设计具有以下优势：</p>
+
+<h4 id="1-内存管理优化">1. <strong>内存管理优化</strong></h4>
+<ul>
+  <li>使用内存池技术，减少频繁的内存分配和垃圾回收。</li>
+  <li>提高性能并降低延迟。</li>
+</ul>
+
+<h4 id="2-零拷贝技术">2. <strong>零拷贝技术</strong></h4>
+<ul>
+  <li>支持零拷贝（Zero-Copy），避免不必要的数据拷贝。</li>
+  <li>减少 CPU 和内存的负担，提高数据传输效率。</li>
+</ul>
+
+<h4 id="3-支持多种数据类型">3. <strong>支持多种数据类型</strong></h4>
+<ul>
+  <li>提供堆内存缓冲区（Heap Buffer）和直接内存缓冲区（Direct Buffer）。</li>
+  <li>根据需求选择合适的 Buffer 类型以优化性能。</li>
+</ul>
+
+<h4 id="4-灵活的-api">4. <strong>灵活的 API</strong></h4>
+<ul>
+  <li>提供丰富的操作方法，支持数据读写、切片、复制等操作。</li>
+  <li>简化数据处理流程。</li>
+</ul>
+
+<h4 id="5-与-channelpipeline-集成">5. <strong>与 ChannelPipeline 集成</strong></h4>
+<ul>
+  <li>Buffer 与 <code class="language-plaintext highlighter-rouge">ChannelPipeline</code> 紧密集成，便于在处理器之间传递数据。</li>
+</ul>
+
+<h4 id="6-可扩展性和定制性">6. <strong>可扩展性和定制性</strong></h4>
+<ul>
+  <li>支持扩展和定制，满足高级功能需求。</li>
+</ul>
+
+<p><strong>总结</strong>：Netty 的 Buffer 在性能、内存管理和灵活性方面表现出色，是处理小规模和大规模数据的强大工具。</p>
+
+<hr />
+
+<h3 id="netty-的对象池技术">Netty 的对象池技术</h3>
+
+<p>Netty 的对象池技术通过重用对象来提高内存使用效率和性能，特别适用于高并发和大规模数据处理场景。以下是其关键点：</p>
+
+<h4 id="1-bytebuf-对象池">1. <strong>ByteBuf 对象池</strong></h4>
+<ul>
+  <li>重用字节缓冲区，避免频繁创建和销毁。</li>
+  <li>减少内存分配和垃圾回收的开销。</li>
+</ul>
+
+<h4 id="2-channelhandlercontext-对象池">2. <strong>ChannelHandlerContext 对象池</strong></h4>
+<ul>
+  <li>重用 <code class="language-plaintext highlighter-rouge">ChannelHandlerContext</code> 对象，减少上下文对象的创建和销毁。</li>
+  <li>提高数据处理效率。</li>
+</ul>
+
+<h4 id="3-资源回收和管理">3. <strong>资源回收和管理</strong></h4>
+<ul>
+  <li>自动管理对象生命周期，未使用的对象会被返回到对象池。</li>
+  <li>避免内存泄漏和资源浪费。</li>
+</ul>
+
+<h4 id="4-配置和定制">4. <strong>配置和定制</strong></h4>
+<ul>
+  <li>支持对象池大小、对象生存时间等参数的配置。</li>
+  <li>满足不同场景和负载需求。</li>
+</ul>
+
+<p><strong>总结</strong>：Netty 的对象池技术通过重用对象降低资源开销，提高数据传输效率，并减少内存碎片化问题。</p>
+
+<hr />
+
+<h3 id="netty-支持的序列化协议">Netty 支持的序列化协议</h3>
+
+<p>Netty 本身不直接提供序列化协议，但可以与多种序列化协议集成，用于数据的编码和解码。以下是常见的序列化协议：</p>
+
+<h4 id="1-java-自带的序列化">1. <strong>Java 自带的序列化</strong></h4>
+<ul>
+  <li>将 Java 对象转换为字节流。</li>
+  <li>性能较低，适合简单场景。</li>
+</ul>
+
+<h4 id="2-json">2. <strong>JSON</strong></h4>
+<ul>
+  <li>轻量级数据交换格式，易于阅读和编写。</li>
+  <li>可与 Jackson、Gson 等库集成。</li>
+</ul>
+
+<h4 id="3-protobuf">3. <strong>Protobuf</strong></h4>
+<ul>
+  <li>Google 开发的高效二进制序列化协议。</li>
+  <li>性能高，数据表示紧凑。</li>
+</ul>
+
+<h4 id="4-messagepack">4. <strong>MessagePack</strong></h4>
+<ul>
+  <li>基于二进制的轻量级序列化格式。</li>
+  <li>性能高，适合高效数据传输。</li>
+</ul>
+
+<h4 id="5-thrift">5. <strong>Thrift</strong></h4>
+<ul>
+  <li>Apache 开发的跨语言序列化协议。</li>
+  <li>支持多种编程语言，性能优异。</li>
+</ul>
+
+<h4 id="6-avro">6. <strong>Avro</strong></h4>
+<ul>
+  <li>Apache 开发的序列化框架，支持动态数据模型。</li>
+  <li>提供紧凑的二进制格式。</li>
+</ul>
+
+<p><strong>总结</strong>：根据应用需求选择合适的序列化协议，Netty 的灵活性使其能够与各种协议集成，实现高效的网络通信。</p>
+
+<hr />
+
+<h3 id="netty-中的设计模式">Netty 中的设计模式</h3>
+
+<p>Netty 使用了多种设计模式来实现高效的网络通信和处理。以下是常见的设计模式：</p>
+
+<h4 id="1-工厂模式">1. <strong>工厂模式</strong></h4>
+<ul>
+  <li>用于创建通道、处理器等组件。</li>
+  <li>隐藏对象创建细节，提升代码可维护性。</li>
+</ul>
+
+<h4 id="2-装饰器模式">2. <strong>装饰器模式</strong></h4>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">ChannelPipeline</code> 使用装饰器模式。</li>
+  <li>每个处理器可以添加额外逻辑，定制数据处理流程。</li>
+</ul>
+
+<h4 id="3-观察者模式">3. <strong>观察者模式</strong></h4>
+<ul>
+  <li>事件和事件监听器机制使用观察者模式。</li>
+  <li>通道状态变化、数据读写等事件可被监听和处理。</li>
+</ul>
+
+<h4 id="4-责任链模式">4. <strong>责任链模式</strong></h4>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">ChannelPipeline</code> 本质上是一个责任链。</li>
+  <li>每个处理器负责特定任务，按顺序处理数据。</li>
+</ul>
+
+<h4 id="5-单例模式">5. <strong>单例模式</strong></h4>
+<ul>
+  <li>线程池、事件循环等关键组件使用单例模式。</li>
+  <li>节省资源并确保一致性。</li>
+</ul>
+
+<h4 id="6-模板方法模式">6. <strong>模板方法模式</strong></h4>
+<ul>
+  <li>提供通用处理流程，具体实现由子类完成。</li>
+  <li>简化代码复用。</li>
+</ul>
+
+<h4 id="7-策略模式">7. <strong>策略模式</strong></h4>
+<ul>
+  <li>编码器和解码器可根据需求替换。</li>
+  <li>提供灵活的组件选择。</li>
+</ul>
+
+<h4 id="8-适配器模式">8. <strong>适配器模式</strong></h4>
+<ul>
+  <li>转换不同数据格式和协议。</li>
+  <li>满足多样化通信需求。</li>
+</ul>
+
+<p><strong>总结</strong>：Netty 的设计模式使其具备高度灵活性和可扩展性，能够满足各种网络通信场景的需求。</p>]]></content><author><name>Erkan9527</name></author><category term="技术" /><summary type="html"><![CDATA[为什么Netty适合做网络编程？]]></summary></entry></feed>
