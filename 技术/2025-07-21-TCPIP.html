@@ -159,7 +159,7 @@
                                 </a>
                                 
                                     
-                                        <ul><li><a href="#tcpip-模型的核心概念" onclick="mobilePageScrollToAnchor(this)" >TCP/IP 模型的核心概念</a><ul><li><a href="#关键点" onclick="mobilePageScrollToAnchor(this)" >关键点：</a></li><li><a href="#数据通信流程" onclick="mobilePageScrollToAnchor(this)" >数据通信流程</a></li></ul></li></ul>
+                                        <ul><li><a href="#tcpip-模型的核心概念" onclick="mobilePageScrollToAnchor(this)" >TCP/IP 模型的核心概念</a><ul><li><a href="#关键点" onclick="mobilePageScrollToAnchor(this)" >关键点：</a></li><li><a href="#数据通信流程" onclick="mobilePageScrollToAnchor(this)" >数据通信流程</a></li><li><a href="#各层的作用详解" onclick="mobilePageScrollToAnchor(this)" >各层的作用详解</a></li><li><a href="#发送端封装" onclick="mobilePageScrollToAnchor(this)" >发送端（封装）：</a></li><li><a href="#接收端解封装" onclick="mobilePageScrollToAnchor(this)" >接收端（解封装）：</a></li><li><a href="#总结" onclick="mobilePageScrollToAnchor(this)" >总结</a></li></ul></li></ul>
 
                                     
                                 
@@ -244,7 +244,106 @@
 </span>
 </code></pre></div></div>
 
-<h4 id="发送端封装">发送端（封装）：</h4>
+<hr />
+
+<h3 id="各层的作用详解">各层的作用详解</h3>
+
+<h4 id="1-应用层">1. 应用层</h4>
+<ul>
+  <li><strong>作用</strong>：为用户提供直接的网络服务，处理应用程序之间的通信。</li>
+  <li><strong>典型协议</strong>：HTTP（网页浏览）、FTP（文件传输）、SMTP（邮件传输）。</li>
+  <li><strong>功能</strong>：生成用户数据，并将其传递给传输层。</li>
+</ul>
+
+<h4 id="2-传输层">2. 传输层</h4>
+<ul>
+  <li><strong>作用</strong>：提供端到端的通信服务，确保数据可靠传输。</li>
+  <li><strong>典型协议</strong>：TCP（面向连接，可靠传输）、UDP（无连接，快速传输）。</li>
+  <li><strong>功能</strong>：
+    <ul>
+      <li>分割数据为段（Segment）。</li>
+      <li>添加端口号，用于标识发送方和接收方的应用程序。</li>
+      <li>提供错误检测和流量控制（TCP）。</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="3-网络层">3. 网络层</h4>
+<ul>
+  <li><strong>作用</strong>：负责数据的路由选择和逻辑地址（IP 地址）管理。</li>
+  <li><strong>典型协议</strong>：IP（IPv4/IPv6）、ICMP（网络诊断）、ARP（地址解析）。</li>
+  <li><strong>功能</strong>：
+    <ul>
+      <li>将段封装为包（Packet）。</li>
+      <li>添加源 IP 和目标 IP 地址。</li>
+      <li>确定数据的最佳传输路径。</li>
+    </ul>
+  </li>
+</ul>
+
+<h5 id="子网掩码计算">子网掩码计算</h5>
+<ul>
+  <li><strong>子网掩码的作用</strong>：用于区分 IP 地址中的网络部分和主机部分，帮助确定数据包是否在同一子网内。</li>
+  <li><strong>计算方法</strong>：
+    <ol>
+      <li><strong>子网划分</strong>：根据需求确定子网数量或主机数量。</li>
+      <li><strong>子网掩码表示</strong>：以点分十进制（如 <code class="language-plaintext highlighter-rouge">255.255.255.0</code>）或 CIDR 表示法（如 <code class="language-plaintext highlighter-rouge">/24</code>）。</li>
+      <li><strong>网络地址计算</strong>：将 IP 地址与子网掩码按位与（AND）运算，得到网络地址。</li>
+      <li><strong>广播地址计算</strong>：将子网掩码取反后与 IP 地址按位或（OR）运算，得到广播地址。</li>
+    </ol>
+  </li>
+  <li><strong>示例</strong>：
+    <ul>
+      <li>IP 地址：<code class="language-plaintext highlighter-rouge">192.168.1.10</code></li>
+      <li>子网掩码：<code class="language-plaintext highlighter-rouge">255.255.255.0</code> 或 <code class="language-plaintext highlighter-rouge">/24</code></li>
+      <li>网络地址计算：
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>192.168.1.10 (IP 地址)
+AND 255.255.255.0 (子网掩码)
+---------------------
+192.168.1.0 (网络地址)
+</code></pre></div>        </div>
+      </li>
+      <li>广播地址计算：
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>192.168.1.10 (IP 地址)
+OR 0.0.0.255 (子网掩码取反)
+---------------------
+192.168.1.255 (广播地址)
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<h4 id="4-链路层网络接口层">4. 链路层（网络接口层）</h4>
+<ul>
+  <li><strong>作用</strong>：负责物理网络上的数据传输，处理硬件地址（MAC 地址）。</li>
+  <li><strong>典型协议</strong>：Ethernet（以太网）、Wi-Fi（无线局域网）。</li>
+  <li><strong>功能</strong>：
+    <ul>
+      <li>将包封装为帧（Frame）。</li>
+      <li>添加源 MAC 和目标 MAC 地址。</li>
+      <li>提供错误检测（如 CRC 校验）。</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="5-物理层">5. 物理层</h4>
+<ul>
+  <li><strong>作用</strong>：负责比特流的传输，定义硬件接口和信号标准。</li>
+  <li><strong>典型技术</strong>：光纤、双绞线、无线电波。</li>
+  <li><strong>功能</strong>：
+    <ul>
+      <li>将帧转换为电信号、光信号或无线信号。</li>
+      <li>确保信号在物理介质上传输。</li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<h3 id="发送端封装">发送端（封装）：</h3>
 <ol>
   <li><strong>应用层</strong>：生成用户数据。</li>
   <li><strong>传输层</strong>：添加传输层首部（如 TCP/UDP 头）。</li>
@@ -253,7 +352,7 @@
   <li><strong>最终形成帧</strong>：帧中包含包，包中包含段，段中是数据。</li>
 </ol>
 
-<h4 id="接收端解封装">接收端（解封装）：</h4>
+<h3 id="接收端解封装">接收端（解封装）：</h3>
 <ol>
   <li><strong>链路层</strong>：移除 MAC 头/尾。</li>
   <li><strong>网络层</strong>：移除 IP 头。</li>
@@ -262,6 +361,9 @@
 </ol>
 
 <hr />
+
+<h3 id="总结">总结</h3>
+<p>TCP/IP 模型的分层设计使得网络通信更加模块化和高效。每一层都有明确的职责，发送时逐层封装，接收时逐层解封装，确保数据能够准确传递并还原。</p>
 
 </section>
             </div><div class="search-results">
@@ -431,7 +533,7 @@ window.MathJax = {
     },
     "gitbook": {
         "version": "3.2.3",
-        "time": "2025-07-21 02:57:52 +0000"
+        "time": "2025-07-21 05:24:19 +0000"
     },
     "basePath": "/erkan9527-blog",
     "book": {
