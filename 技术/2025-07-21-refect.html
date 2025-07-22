@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html lang="en" >
     <head><meta charset="UTF-8">
-<meta content="text/html; charset=utf-8" http-equiv="Content-Type"><title>Erkan9527 · Erkan9527</title><meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"><title>Java反射 · Erkan9527</title><meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="description" content="格物致知
 "><meta name="generator" content="Jekyll (using style of GitBook 3.2.3)"><meta name="author" content="Erkan9527"><link rel="stylesheet" href="/erkan9527-blog/assets/gitbook/style.css">
 <link rel="stylesheet" href="/erkan9527-blog/assets/gitbook/gitbook-plugin-back-to-top-button/plugin.css">
@@ -25,9 +25,11 @@
 
 
 
+            <link rel="prev" href="/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-21-http.html" />
+        
 
         
-            <link rel="next" href="/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-19-redismothod.html" />
+            <link rel="next" href="/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-22-aop.html" />
         
     </head>
     <body>
@@ -65,7 +67,7 @@
         </div>
         <ul class="summary">
             
-            <li class="chapter active" data-level="1.1" data-path="/erkan9527-blog">
+            <li class="chapter" data-level="1.1" data-path="/erkan9527-blog">
             
                 <a href="/erkan9527-blog/" onclick="pageScrollToTop(this)">
                     Erkan9527
@@ -174,12 +176,15 @@
                             </li>
                         
                             
-                            <li class="chapter" data-level="1.1" data-path="/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-21-refect.html">
+                            <li class="chapter active" data-level="1.2" data-path="/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-21-refect.html">
                             
                                 <a href="/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-21-refect.html" onclick="pageScrollToTop(this)">
                                     Java反射
                                 </a>
                                 
+                                    
+                                        <ul><li><a href="#java-反射详解" onclick="mobilePageScrollToAnchor(this)" >Java 反射详解</a><ul><li><a href="#1-什么是反射" onclick="mobilePageScrollToAnchor(this)" >1. 什么是反射？</a></li><li><a href="#2-反射的核心类" onclick="mobilePageScrollToAnchor(this)" >2. 反射的核心类</a></li><li><a href="#3-反射的核心功能" onclick="mobilePageScrollToAnchor(this)" >3. 反射的核心功能</a><ul><li><a href="#31-获取-class-对象" onclick="mobilePageScrollToAnchor(this)" >3.1 获取 <code class="language-plaintext highlighter-rouge">Class</code> 对象</a></li><li><a href="#32-获取类的基本信息" onclick="mobilePageScrollToAnchor(this)" >3.2 获取类的基本信息</a></li><li><a href="#33-获取构造函数" onclick="mobilePageScrollToAnchor(this)" >3.3 获取构造函数</a></li><li><a href="#34-获取字段成员变量" onclick="mobilePageScrollToAnchor(this)" >3.4 获取字段（成员变量）</a></li><li><a href="#35-获取方法" onclick="mobilePageScrollToAnchor(this)" >3.5 获取方法</a></li><li><a href="#36-动态代理" onclick="mobilePageScrollToAnchor(this)" >3.6 动态代理</a></li></ul></li><li><a href="#4-反射的应用场景" onclick="mobilePageScrollToAnchor(this)" >4. 反射的应用场景</a></li><li><a href="#5-反射的优缺点" onclick="mobilePageScrollToAnchor(this)" >5. 反射的优缺点</a><ul><li><a href="#优点" onclick="mobilePageScrollToAnchor(this)" >优点</a></li><li><a href="#缺点" onclick="mobilePageScrollToAnchor(this)" >缺点</a></li></ul></li><li><a href="#6-反射的注意事项" onclick="mobilePageScrollToAnchor(this)" >6. 反射的注意事项</a></li><li><a href="#7-总结" onclick="mobilePageScrollToAnchor(this)" >7. 总结</a></li></ul></li></ul>
+
                                     
                                 
                             </li>
@@ -231,7 +236,7 @@
                     <h1>
                         <i class="fa fa-circle-o-notch fa-spin"></i>
                         
-                            <a href="." >Erkan9527</a>
+                            <a href="." >Java反射</a>
                         
                     </h1>
                 </div>
@@ -244,25 +249,135 @@
             <div class="search-noresults">
                 <section class="normal markdown-section">
                     
-                        <h1 id="">Erkan9527</h1>
+                        <h1 id="/%E6%8A%80%E6%9C%AF/refect">Java反射</h1>
                     
 
-                    <ul>
-  <li>学校：广东药科大学</li>
-  <li>专业：智能医学工程</li>
-  <li>学历：本科</li>
+                    <h1 id="java-反射详解">Java 反射详解</h1>
+
+<h2 id="1-什么是反射">1. 什么是反射？</h2>
+<p>反射（Reflection）是 Java 提供的一种机制，允许程序在运行时动态地获取类的结构信息（如类名、方法、字段、构造函数等），并对其进行操作。通过反射，程序可以在运行时加载类、调用方法、访问字段等，而无需在编译时明确指定。</p>
+
+<hr />
+
+<h2 id="2-反射的核心类">2. 反射的核心类</h2>
+<p>反射的核心功能由以下类提供，这些类都位于 <code class="language-plaintext highlighter-rouge">java.lang.reflect</code> 包中：</p>
+
+<table>
+  <thead>
+    <tr>
+      <th><strong>类名</strong></th>
+      <th><strong>描述</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Class</code></td>
+      <td>表示类或接口的运行时信息，是反射的入口。</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Field</code></td>
+      <td>表示类的字段（成员变量），可用于获取或修改字段值。</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Method</code></td>
+      <td>表示类的方法，可用于调用方法。</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Constructor</code></td>
+      <td>表示类的构造函数，可用于创建对象实例。</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Modifier</code></td>
+      <td>提供静态方法，用于检查类或成员的修饰符（如 <code class="language-plaintext highlighter-rouge">public</code>、<code class="language-plaintext highlighter-rouge">static</code>）。</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h2 id="3-反射的核心功能">3. 反射的核心功能</h2>
+
+<h3 id="31-获取-class-对象">3.1 获取 <code class="language-plaintext highlighter-rouge">Class</code> 对象</h3>
+<p><code class="language-plaintext highlighter-rouge">Class</code> 是反射的入口，表示类的运行时信息。获取 <code class="language-plaintext highlighter-rouge">Class</code> 对象的方式有三种：</p>
+<ul>
+  <li><strong>方式 1</strong>：<code class="language-plaintext highlighter-rouge">Class.forName("类的全限定名")</code></li>
+  <li><strong>方式 2</strong>：<code class="language-plaintext highlighter-rouge">类名.class</code></li>
+  <li><strong>方式 3</strong>：<code class="language-plaintext highlighter-rouge">对象.getClass()</code></li>
 </ul>
 
-<h3 id="获奖情况">获奖情况</h3>
+<hr />
 
-<p><img src="assets/mcm_F.png" alt="2025年美国大学生数学建模大赛F奖" /></p>
+<h3 id="32-获取类的基本信息">3.2 获取类的基本信息</h3>
+<p>通过 <code class="language-plaintext highlighter-rouge">Class</code> 对象，可以获取类的基本信息：</p>
+<ul>
+  <li>类名、包名</li>
+  <li>父类、实现的接口</li>
+</ul>
 
-<p><img src="assets/2024cnm.png" alt="2024全国大学生数学建模大赛广东省二等奖" /></p>
+<hr />
 
-<p><img src="assets/2024mothercup.png" alt="2024全国大学生数学建模大赛广东省二等奖" /></p>
+<h3 id="33-获取构造函数">3.3 获取构造函数</h3>
+<p>通过 <code class="language-plaintext highlighter-rouge">Class</code> 对象，可以获取类的构造函数，并动态创建对象。</p>
 
-<p><img src="assets/dingding.png" alt="2024年钉钉杯大学生大数据挑战赛三等奖" /></p>
+<hr />
 
+<h3 id="34-获取字段成员变量">3.4 获取字段（成员变量）</h3>
+<p>通过 <code class="language-plaintext highlighter-rouge">Class</code> 对象，可以获取类的字段，并读取或修改字段值。</p>
+
+<hr />
+
+<h3 id="35-获取方法">3.5 获取方法</h3>
+<p>通过 <code class="language-plaintext highlighter-rouge">Class</code> 对象，可以获取类的方法，并调用方法。</p>
+
+<hr />
+
+<h3 id="36-动态代理">3.6 动态代理</h3>
+<p>动态代理是反射的重要应用之一，允许在运行时动态生成代理类，拦截方法调用。</p>
+
+<hr />
+
+<h2 id="4-反射的应用场景">4. 反射的应用场景</h2>
+<p>反射在以下场景中非常有用：</p>
+<ul>
+  <li><strong>框架开发</strong>：如 Spring、Hibernate 等框架大量使用反射实现依赖注入、动态代理等功能。</li>
+  <li><strong>动态加载类</strong>：如插件系统，可以在运行时加载和使用外部类。</li>
+  <li><strong>序列化与反序列化</strong>：如 JSON/XML 序列化工具。</li>
+  <li><strong>测试框架</strong>：如 JUnit 使用反射调用测试方法。</li>
+  <li><strong>代码分析工具</strong>：如 IDE 的代码补全和静态分析功能。</li>
+</ul>
+
+<hr />
+
+<h2 id="5-反射的优缺点">5. 反射的优缺点</h2>
+
+<h3 id="优点">优点</h3>
+<ul>
+  <li><strong>灵活性</strong>：可以在运行时动态操作类和对象。</li>
+  <li><strong>动态性</strong>：支持动态加载和调用，适合插件化开发。</li>
+  <li><strong>通用性</strong>：可以编写通用代码，减少重复。</li>
+</ul>
+
+<h3 id="缺点">缺点</h3>
+<ul>
+  <li><strong>性能开销</strong>：反射操作比直接调用慢，可能影响性能。</li>
+  <li><strong>安全性问题</strong>：可能破坏封装性，访问私有字段或方法。</li>
+  <li><strong>代码复杂性</strong>：反射代码通常较难阅读和维护。</li>
+</ul>
+
+<hr />
+
+<h2 id="6-反射的注意事项">6. 反射的注意事项</h2>
+<ul>
+  <li><strong>性能问题</strong>：反射操作较慢，尽量避免在性能敏感的场景中频繁使用。</li>
+  <li><strong>安全性问题</strong>：滥用反射可能导致安全漏洞，尤其是访问私有成员。</li>
+  <li><strong>兼容性问题</strong>：反射依赖于类的结构，类的修改可能导致反射代码失效。</li>
+  <li><strong>访问限制</strong>：Java 9 及以上版本对反射访问做了更多限制（如模块化系统）。</li>
+</ul>
+
+<hr />
+
+<h2 id="7-总结">7. 总结</h2>
+<p>反射是 Java 提供的一种强大机制，允许程序在运行时动态操作类和对象。尽管反射带来了极大的灵活性，但也需要谨慎使用，避免性能和安全问题。在实际开发中，反射通常用于框架和工具的底层实现，而不是业务代码的常规操作。</p>
 </section>
             </div><div class="search-results">
     <div class="has-results">
@@ -318,12 +433,14 @@ window.MathJax = {
     }
 </script>
 
-<a href="/erkan9527-blog/" class="navigation navigation-pre navigation-unique">
-                        <i class="fa"></i>
-                    </a>
+
+                        <a href="/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-21-http.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: HTTP 协议详解">
+                            <i class="fa fa-angle-left"></i>
+                        </a>
+                    
 
                     
-                        <a href="/erkan9527-blog" class="navigation navigation-next navigation-unique" aria-label="Next page: ">
+                        <a href="/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-22-aop.html" class="navigation navigation-next navigation-unique" aria-label="Next page: AOP注解实现参数校验">
                             <i class="fa fa-angle-right"></i>
                         </a>
                     
@@ -339,14 +456,12 @@ window.MathJax = {
         "level": "1.1",
         "depth": 1,
         
-
-        
         "next": {
-            "title": "Redis 集群方案",
+            "title": "AOP注解实现参数校验",
             "level": "1.2",
             "depth": 1,
-            "path": "_posts/2025-07-18-redismothod.md",
-            "ref": "_posts/2025-07-18-redismothod.md",
+            "path": "_posts/2025-07-22-aop.md",
+            "ref": "_posts/2025-07-22-aop.md",
             "articles": []
         },
         
@@ -438,8 +553,8 @@ window.MathJax = {
         "gitbook": "*"
     },
     "file": {
-        "path": "README.md",
-        "mtime": "",
+        "path": "_posts/2025-07-22-refect.md",
+        "mtime": "2025-07-21 00:00:00 +0000",
         "type": "markdown"
     },
     "gitbook": {

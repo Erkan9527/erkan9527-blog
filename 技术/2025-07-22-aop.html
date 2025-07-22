@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html lang="en" >
     <head><meta charset="UTF-8">
-<meta content="text/html; charset=utf-8" http-equiv="Content-Type"><title>Erkan9527 · Erkan9527</title><meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"><title>AOP注解实现参数校验 · Erkan9527</title><meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="description" content="格物致知
 "><meta name="generator" content="Jekyll (using style of GitBook 3.2.3)"><meta name="author" content="Erkan9527"><link rel="stylesheet" href="/erkan9527-blog/assets/gitbook/style.css">
 <link rel="stylesheet" href="/erkan9527-blog/assets/gitbook/gitbook-plugin-back-to-top-button/plugin.css">
@@ -25,9 +25,9 @@
 
 
 
-
+            <link rel="prev" href="/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-21-refect.html" />
         
-            <link rel="next" href="/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-19-redismothod.html" />
+
         
     </head>
     <body>
@@ -65,7 +65,7 @@
         </div>
         <ul class="summary">
             
-            <li class="chapter active" data-level="1.1" data-path="/erkan9527-blog">
+            <li class="chapter" data-level="1.1" data-path="/erkan9527-blog">
             
                 <a href="/erkan9527-blog/" onclick="pageScrollToTop(this)">
                     Erkan9527
@@ -185,12 +185,15 @@
                             </li>
                         
                             
-                            <li class="chapter" data-level="1.1" data-path="/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-22-aop.html">
+                            <li class="chapter active" data-level="1.2" data-path="/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-22-aop.html">
                             
                                 <a href="/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-22-aop.html" onclick="pageScrollToTop(this)">
                                     AOP注解实现参数校验
                                 </a>
                                 
+                                    
+                                        <ul><li><a href="#aop-注解实现参数校验" onclick="mobilePageScrollToAnchor(this)" >AOP 注解实现参数校验</a><ul><li><a href="#1-背景与需求" onclick="mobilePageScrollToAnchor(this)" >1. 背景与需求</a></li><li><a href="#2-实现步骤" onclick="mobilePageScrollToAnchor(this)" >2. 实现步骤</a><ul><li><a href="#21-定义自定义注解" onclick="mobilePageScrollToAnchor(this)" >2.1 定义自定义注解</a></li><li><a href="#22-创建-aop-切面" onclick="mobilePageScrollToAnchor(this)" >2.2 创建 AOP 切面</a></li><li><a href="#23-使用自定义注解" onclick="mobilePageScrollToAnchor(this)" >2.3 使用自定义注解</a></li></ul></li><li><a href="#3-总结" onclick="mobilePageScrollToAnchor(this)" >3. 总结</a></li></ul></li></ul>
+
                                     
                                 
                             </li>
@@ -231,7 +234,7 @@
                     <h1>
                         <i class="fa fa-circle-o-notch fa-spin"></i>
                         
-                            <a href="." >Erkan9527</a>
+                            <a href="." >AOP注解实现参数校验</a>
                         
                     </h1>
                 </div>
@@ -244,24 +247,127 @@
             <div class="search-noresults">
                 <section class="normal markdown-section">
                     
-                        <h1 id="">Erkan9527</h1>
+                        <h1 id="/%E6%8A%80%E6%9C%AF/aop">AOP注解实现参数校验</h1>
                     
 
-                    <ul>
-  <li>学校：广东药科大学</li>
-  <li>专业：智能医学工程</li>
-  <li>学历：本科</li>
+                    <h1 id="aop-注解实现参数校验">AOP 注解实现参数校验</h1>
+
+<p>在实际开发中，参数校验是一个非常常见的需求。传统的校验方式通常直接嵌入到业务逻辑中，导致代码耦合度高、可维护性差。而通过 <strong>AOP（面向切面编程）</strong> 和 <strong>反射</strong>，我们可以将参数校验逻辑从业务代码中解耦出来，实现统一的校验逻辑。</p>
+
+<p>本文将通过一个完整的案例，展示如何使用 AOP 和自定义注解实现参数校验。</p>
+
+<hr />
+
+<h2 id="1-背景与需求">1. 背景与需求</h2>
+
+<p>在业务开发中，我们经常需要对方法的参数进行校验，例如：</p>
+<ul>
+  <li>检查参数是否为 <code class="language-plaintext highlighter-rouge">null</code>。</li>
+  <li>校验字符串是否为空或超出长度限制。</li>
+  <li>验证参数是否符合特定规则（如邮箱格式、手机号格式等）。</li>
 </ul>
 
-<h3 id="获奖情况">获奖情况</h3>
+<p>如果将这些校验逻辑直接写在业务方法中，会导致代码臃肿且难以复用。通过 AOP 和注解，我们可以实现以下目标：</p>
+<ol>
+  <li><strong>解耦校验逻辑</strong>：将校验逻辑从业务代码中分离。</li>
+  <li><strong>增强复用性</strong>：校验逻辑可以在多个方法中复用。</li>
+  <li><strong>提高可维护性</strong>：校验规则集中管理，便于扩展。</li>
+</ol>
 
-<p><img src="assets/mcm_F.png" alt="2025年美国大学生数学建模大赛F奖" /></p>
+<hr />
 
-<p><img src="assets/2024cnm.png" alt="2024全国大学生数学建模大赛广东省二等奖" /></p>
+<h2 id="2-实现步骤">2. 实现步骤</h2>
 
-<p><img src="assets/2024mothercup.png" alt="2024全国大学生数学建模大赛广东省二等奖" /></p>
+<h3 id="21-定义自定义注解">2.1 定义自定义注解</h3>
 
-<p><img src="assets/dingding.png" alt="2024年钉钉杯大学生大数据挑战赛三等奖" /></p>
+<p>首先，我们需要定义一个注解，用于标记需要校验的参数。例如，<code class="language-plaintext highlighter-rouge">@NotNull</code> 注解用于标记参数不能为空。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// filepath: /path/to/annotations/NotNull.java</span>
+<span class="kn">package</span> <span class="nn">annotations</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.lang.annotation.ElementType</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.lang.annotation.Retention</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.lang.annotation.RetentionPolicy</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.lang.annotation.Target</span><span class="o">;</span>
+
+<span class="cm">/**
+ * 标记参数不能为空的注解
+ */</span>
+<span class="nd">@Target</span><span class="o">(</span><span class="nc">ElementType</span><span class="o">.</span><span class="na">PARAMETER</span><span class="o">)</span> <span class="c1">// 作用于方法参数</span>
+<span class="nd">@Retention</span><span class="o">(</span><span class="nc">RetentionPolicy</span><span class="o">.</span><span class="na">RUNTIME</span><span class="o">)</span> <span class="c1">// 运行时可通过反射获取</span>
+<span class="kd">public</span> <span class="nd">@interface</span> <span class="nc">NotNull</span> <span class="o">{</span>
+    <span class="nc">String</span> <span class="nf">message</span><span class="o">()</span> <span class="k">default</span> <span class="s">"参数不能为空"</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h3 id="22-创建-aop-切面">2.2 创建 AOP 切面</h3>
+
+<p>接下来，我们需要创建一个 AOP 切面，用于拦截带有特定注解的方法，并对参数进行校验。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// filepath: /path/to/aspects/ValidationAspect.java</span>
+<span class="kn">package</span> <span class="nn">aspects</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">annotations.NotNull</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.aspectj.lang.JoinPoint</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.aspectj.lang.annotation.Aspect</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.aspectj.lang.annotation.Before</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.stereotype.Component</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.lang.reflect.Method</span><span class="o">;</span>
+
+<span class="cm">/**
+ * 参数校验切面
+ */</span>
+<span class="nd">@Aspect</span>
+<span class="nd">@Component</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ValidationAspect</span> <span class="o">{</span>
+
+    <span class="nd">@Before</span><span class="o">(</span><span class="s">"execution(* your.package..*(.., @annotations.NotNull (*), ..))"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">validateNotNull</span><span class="o">(</span><span class="nc">JoinPoint</span> <span class="n">joinPoint</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Throwable</span> <span class="o">{</span>
+        <span class="nc">Object</span><span class="o">[]</span> <span class="n">args</span> <span class="o">=</span> <span class="n">joinPoint</span><span class="o">.</span><span class="na">getArgs</span><span class="o">();</span>
+        <span class="nc">Method</span> <span class="n">method</span> <span class="o">=</span> <span class="o">((</span><span class="nc">MethodSignature</span><span class="o">)</span> <span class="n">joinPoint</span><span class="o">.</span><span class="na">getSignature</span><span class="o">()).</span><span class="na">getMethod</span><span class="o">();</span>
+        
+        <span class="c1">// 获取方法参数注解</span>
+        <span class="nc">Annotation</span><span class="o">[][]</span> <span class="n">paramAnnotations</span> <span class="o">=</span> <span class="n">method</span><span class="o">.</span><span class="na">getParameterAnnotations</span><span class="o">();</span>
+        
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">paramAnnotations</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="k">for</span> <span class="o">(</span><span class="nc">Annotation</span> <span class="n">annotation</span> <span class="o">:</span> <span class="n">paramAnnotations</span><span class="o">[</span><span class="n">i</span><span class="o">])</span> <span class="o">{</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">annotation</span> <span class="k">instanceof</span> <span class="nc">NotNull</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="k">if</span> <span class="o">(</span><span class="n">args</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+                        <span class="k">throw</span> <span class="k">new</span> <span class="nf">IllegalArgumentException</span><span class="o">(((</span><span class="nc">NotNull</span><span class="o">)</span> <span class="n">annotation</span><span class="o">).</span><span class="na">message</span><span class="o">());</span>
+                    <span class="o">}</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h3 id="23-使用自定义注解">2.3 使用自定义注解</h3>
+
+<p>最后，在业务代码中使用自定义的 <code class="language-plaintext highlighter-rouge">@NotNull</code> 注解标记需要校验的参数。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// filepath: /path/to/service/YourService.java</span>
+<span class="kn">package</span> <span class="nn">service</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.springframework.stereotype.Service</span><span class="o">;</span>
+
+<span class="nd">@Service</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">YourService</span> <span class="o">{</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">yourMethod</span><span class="o">(</span><span class="nd">@NotNull</span> <span class="nc">String</span> <span class="n">param</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// 方法逻辑</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="3-总结">3. 总结</h2>
+
+<p>通过 AOP 和自定义注解，我们可以方便地实现参数校验逻辑的解耦与复用。本文以 <code class="language-plaintext highlighter-rouge">@NotNull</code> 注解为例，演示了如何定义注解、创建 AOP 切面以及在业务代码中使用注解。实际应用中，我们可以根据需求定义更多的注解（如 <code class="language-plaintext highlighter-rouge">@MaxLength</code>、<code class="language-plaintext highlighter-rouge">@Email</code> 等），并在切面中实现相应的校验逻辑。</p>
+
+<p>这种方式不仅提高了代码的可读性和可维护性，也使得参数校验逻辑更加灵活和强大。</p>
 
 </section>
             </div><div class="search-results">
@@ -318,14 +424,12 @@ window.MathJax = {
     }
 </script>
 
-<a href="/erkan9527-blog/" class="navigation navigation-pre navigation-unique">
-                        <i class="fa"></i>
-                    </a>
 
-                    
-                        <a href="/erkan9527-blog" class="navigation navigation-next navigation-unique" aria-label="Next page: ">
-                            <i class="fa fa-angle-right"></i>
+                        <a href="/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-21-refect.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: Java反射">
+                            <i class="fa fa-angle-left"></i>
                         </a>
+                    
+
                     
                 </div>
             </div>
@@ -338,17 +442,6 @@ window.MathJax = {
         "title": "Introduction",
         "level": "1.1",
         "depth": 1,
-        
-
-        
-        "next": {
-            "title": "Redis 集群方案",
-            "level": "1.2",
-            "depth": 1,
-            "path": "_posts/2025-07-18-redismothod.md",
-            "ref": "_posts/2025-07-18-redismothod.md",
-            "articles": []
-        },
         
         "dir": "ltr"
     },    "config": {
@@ -438,8 +531,8 @@ window.MathJax = {
         "gitbook": "*"
     },
     "file": {
-        "path": "README.md",
-        "mtime": "",
+        "path": "_posts/2025-07-22-aop.md",
+        "mtime": "2025-07-22 00:00:00 +0000",
         "type": "markdown"
     },
     "gitbook": {
