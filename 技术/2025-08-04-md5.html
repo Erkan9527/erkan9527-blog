@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html lang="en" >
     <head><meta charset="UTF-8">
-<meta content="text/html; charset=utf-8" http-equiv="Content-Type"><title>Java反射 · Erkan9527</title><meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"><title>Md5算法 · Erkan9527</title><meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="description" content="格物致知
 "><meta name="generator" content="Jekyll (using style of GitBook 3.2.3)"><meta name="author" content="Erkan9527"><link rel="stylesheet" href="/erkan9527-blog/assets/gitbook/style.css">
 <link rel="stylesheet" href="/erkan9527-blog/assets/gitbook/gitbook-plugin-back-to-top-button/plugin.css">
@@ -25,11 +25,9 @@
 
 
 
-            <link rel="prev" href="/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-21-http.html" />
+            <link rel="prev" href="/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-22-aop.html" />
         
 
-        
-            <link rel="next" href="/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-22-aop.html" />
         
     </head>
     <body>
@@ -176,15 +174,12 @@
                             </li>
                         
                             
-                            <li class="chapter active" data-level="1.2" data-path="/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-21-refect.html">
+                            <li class="chapter" data-level="1.1" data-path="/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-21-refect.html">
                             
                                 <a href="/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-21-refect.html" onclick="pageScrollToTop(this)">
                                     Java反射
                                 </a>
                                 
-                                    
-                                        <ul><li><a href="#java-反射详解" onclick="mobilePageScrollToAnchor(this)" >Java 反射详解</a><ul><li><a href="#1-什么是反射" onclick="mobilePageScrollToAnchor(this)" >1. 什么是反射？</a></li><li><a href="#2-反射的核心类" onclick="mobilePageScrollToAnchor(this)" >2. 反射的核心类</a></li><li><a href="#3-反射的核心功能" onclick="mobilePageScrollToAnchor(this)" >3. 反射的核心功能</a><ul><li><a href="#31-获取-class-对象" onclick="mobilePageScrollToAnchor(this)" >3.1 获取 <code class="language-plaintext highlighter-rouge">Class</code> 对象</a></li><li><a href="#32-获取类的基本信息" onclick="mobilePageScrollToAnchor(this)" >3.2 获取类的基本信息</a></li><li><a href="#33-获取构造函数" onclick="mobilePageScrollToAnchor(this)" >3.3 获取构造函数</a></li><li><a href="#34-获取字段成员变量" onclick="mobilePageScrollToAnchor(this)" >3.4 获取字段（成员变量）</a></li><li><a href="#35-获取方法" onclick="mobilePageScrollToAnchor(this)" >3.5 获取方法</a></li><li><a href="#36-动态代理" onclick="mobilePageScrollToAnchor(this)" >3.6 动态代理</a></li></ul></li><li><a href="#4-反射的应用场景" onclick="mobilePageScrollToAnchor(this)" >4. 反射的应用场景</a></li><li><a href="#5-反射的优缺点" onclick="mobilePageScrollToAnchor(this)" >5. 反射的优缺点</a><ul><li><a href="#优点" onclick="mobilePageScrollToAnchor(this)" >优点</a></li><li><a href="#缺点" onclick="mobilePageScrollToAnchor(this)" >缺点</a></li></ul></li><li><a href="#6-反射的注意事项" onclick="mobilePageScrollToAnchor(this)" >6. 反射的注意事项</a></li><li><a href="#7-总结" onclick="mobilePageScrollToAnchor(this)" >7. 总结</a></li></ul></li></ul>
-
                                     
                                 
                             </li>
@@ -201,12 +196,15 @@
                             </li>
                         
                             
-                            <li class="chapter" data-level="1.1" data-path="/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-08-04-md5.html">
+                            <li class="chapter active" data-level="1.2" data-path="/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-08-04-md5.html">
                             
                                 <a href="/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-08-04-md5.html" onclick="pageScrollToTop(this)">
                                     Md5算法
                                 </a>
                                 
+                                    
+                                        <ul><li><a href="#一md5-的基本原理" onclick="mobilePageScrollToAnchor(this)" >一、MD5 的基本原理</a><ul><li><a href="#11-主要特性" onclick="mobilePageScrollToAnchor(this)" >1.1 主要特性</a></li></ul></li><li><a href="#二md5-的底层实现流程" onclick="mobilePageScrollToAnchor(this)" >二、MD5 的底层实现流程</a><ul><li><a href="#21-数据填充padding" onclick="mobilePageScrollToAnchor(this)" >2.1 数据填充（Padding）</a></li><li><a href="#22-初始化缓冲区" onclick="mobilePageScrollToAnchor(this)" >2.2 初始化缓冲区</a></li><li><a href="#23-处理分组" onclick="mobilePageScrollToAnchor(this)" >2.3 处理分组</a></li><li><a href="#24-非线性函数与常量" onclick="mobilePageScrollToAnchor(this)" >2.4 非线性函数与常量</a></li><li><a href="#25-输出结果" onclick="mobilePageScrollToAnchor(this)" >2.5 输出结果</a></li></ul></li><li><a href="#三md5-的核心算法结构" onclick="mobilePageScrollToAnchor(this)" >三、MD5 的核心算法结构</a><ul><li><a href="#31-四个非线性函数" onclick="mobilePageScrollToAnchor(this)" >3.1 四个非线性函数</a></li><li><a href="#32-每轮操作" onclick="mobilePageScrollToAnchor(this)" >3.2 每轮操作</a></li></ul></li><li><a href="#四md5-的应用场景" onclick="mobilePageScrollToAnchor(this)" >四、MD5 的应用场景</a></li><li><a href="#五md5-的安全性与局限" onclick="mobilePageScrollToAnchor(this)" >五、MD5 的安全性与局限</a><ul><li><a href="#51-安全性问题" onclick="mobilePageScrollToAnchor(this)" >5.1 安全性问题</a></li><li><a href="#52-现状与替代" onclick="mobilePageScrollToAnchor(this)" >5.2 现状与替代</a></li></ul></li><li><a href="#六md5-的拓展与变种" onclick="mobilePageScrollToAnchor(this)" >六、MD5 的拓展与变种</a></li><li><a href="#七md5-的代码实现python-示例" onclick="mobilePageScrollToAnchor(this)" >七、MD5 的代码实现（Python 示例）</a></li><li><a href="#八常见问题与误区" onclick="mobilePageScrollToAnchor(this)" >八、常见问题与误区</a></li><li><a href="#九参考资料" onclick="mobilePageScrollToAnchor(this)" >九、参考资料</a></li></ul>
+
                                     
                                 
                             </li>
@@ -247,7 +245,7 @@
                     <h1>
                         <i class="fa fa-circle-o-notch fa-spin"></i>
                         
-                            <a href="." >Java反射</a>
+                            <a href="." >Md5算法</a>
                         
                     </h1>
                 </div>
@@ -260,135 +258,160 @@
             <div class="search-noresults">
                 <section class="normal markdown-section">
                     
-                        <h1 id="/%E6%8A%80%E6%9C%AF/refect">Java反射</h1>
+                        <h1 id="/%E6%8A%80%E6%9C%AF/md5">Md5算法</h1>
                     
 
-                    <h1 id="java-反射详解">Java 反射详解</h1>
-
-<h2 id="1-什么是反射">1. 什么是反射？</h2>
-<p>反射（Reflection）是 Java 提供的一种机制，允许程序在运行时动态地获取类的结构信息（如类名、方法、字段、构造函数等），并对其进行操作。通过反射，程序可以在运行时加载类、调用方法、访问字段等，而无需在编译时明确指定。</p>
+                    <p>MD5（Message Digest Algorithm 5）是一种广泛应用的哈希函数，常用于数据完整性校验、数字签名、密码存储等场景。以下从原理、实现、应用与安全性等多个角度详细介绍 MD5。</p>
 
 <hr />
 
-<h2 id="2-反射的核心类">2. 反射的核心类</h2>
-<p>反射的核心功能由以下类提供，这些类都位于 <code class="language-plaintext highlighter-rouge">java.lang.reflect</code> 包中：</p>
+<h2 id="一md5-的基本原理">一、MD5 的基本原理</h2>
 
-<table>
-  <thead>
-    <tr>
-      <th><strong>类名</strong></th>
-      <th><strong>描述</strong></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">Class</code></td>
-      <td>表示类或接口的运行时信息，是反射的入口。</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">Field</code></td>
-      <td>表示类的字段（成员变量），可用于获取或修改字段值。</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">Method</code></td>
-      <td>表示类的方法，可用于调用方法。</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">Constructor</code></td>
-      <td>表示类的构造函数，可用于创建对象实例。</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">Modifier</code></td>
-      <td>提供静态方法，用于检查类或成员的修饰符（如 <code class="language-plaintext highlighter-rouge">public</code>、<code class="language-plaintext highlighter-rouge">static</code>）。</td>
-    </tr>
-  </tbody>
-</table>
+<p>MD5 是一种<strong>消息摘要算法</strong>，输入任意长度的数据，输出固定长度的 128 位（16 字节）哈希值。其核心目标是将大数据“压缩”为短小的摘要，且不同输入尽量产生不同输出。</p>
 
-<hr />
-
-<h2 id="3-反射的核心功能">3. 反射的核心功能</h2>
-
-<h3 id="31-获取-class-对象">3.1 获取 <code class="language-plaintext highlighter-rouge">Class</code> 对象</h3>
-<p><code class="language-plaintext highlighter-rouge">Class</code> 是反射的入口，表示类的运行时信息。获取 <code class="language-plaintext highlighter-rouge">Class</code> 对象的方式有三种：</p>
+<h3 id="11-主要特性">1.1 主要特性</h3>
 <ul>
-  <li><strong>方式 1</strong>：<code class="language-plaintext highlighter-rouge">Class.forName("类的全限定名")</code></li>
-  <li><strong>方式 2</strong>：<code class="language-plaintext highlighter-rouge">类名.class</code></li>
-  <li><strong>方式 3</strong>：<code class="language-plaintext highlighter-rouge">对象.getClass()</code></li>
+  <li><strong>定长输出</strong>：无论输入多长，输出都是 128 位。</li>
+  <li><strong>雪崩效应</strong>：输入微小变化，输出哈希值变化巨大。</li>
+  <li><strong>不可逆性</strong>：理论上无法通过哈希值还原原始数据。</li>
+  <li><strong>抗碰撞性</strong>：难以找到两个不同输入具有相同哈希值。</li>
 </ul>
 
 <hr />
 
-<h3 id="32-获取类的基本信息">3.2 获取类的基本信息</h3>
-<p>通过 <code class="language-plaintext highlighter-rouge">Class</code> 对象，可以获取类的基本信息：</p>
+<h2 id="二md5-的底层实现流程">二、MD5 的底层实现流程</h2>
+
+<p>MD5 的底层实现分为以下几个步骤：</p>
+
+<h3 id="21-数据填充padding">2.1 数据填充（Padding）</h3>
 <ul>
-  <li>类名、包名</li>
-  <li>父类、实现的接口</li>
+  <li>先在消息末尾添加一个 <code class="language-plaintext highlighter-rouge">1</code> 位，然后补 <code class="language-plaintext highlighter-rouge">0</code>，直到长度对 512 取模等于 448。</li>
+  <li>再补充 64 位，表示原始消息长度（单位：比特）。</li>
+  <li>这样，最终消息长度是 512 的倍数。</li>
+</ul>
+
+<h3 id="22-初始化缓冲区">2.2 初始化缓冲区</h3>
+<ul>
+  <li>定义四个 32 位初始变量（A、B、C、D），分别为：
+    <ul>
+      <li>A = 0x67452301</li>
+      <li>B = 0xefcdab89</li>
+      <li>C = 0x98badcfe</li>
+      <li>D = 0x10325476</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="23-处理分组">2.3 处理分组</h3>
+<ul>
+  <li>将填充后的消息按 512 位（64 字节）分组，每组分为 16 个 32 位字。</li>
+  <li>对每组数据进行 4 轮（Round）运算，每轮 16 步，总共 64 步。</li>
+</ul>
+
+<h3 id="24-非线性函数与常量">2.4 非线性函数与常量</h3>
+<ul>
+  <li>每轮使用不同的非线性函数（F、G、H、I）和常量表（T[i]）。</li>
+  <li>每步操作包括：加法、位运算（与、或、非、异或）、循环左移。</li>
+</ul>
+
+<h3 id="25-输出结果">2.5 输出结果</h3>
+<ul>
+  <li>处理完所有分组后，将 A、B、C、D 拼接，得到最终的 128 位哈希值。</li>
 </ul>
 
 <hr />
 
-<h3 id="33-获取构造函数">3.3 获取构造函数</h3>
-<p>通过 <code class="language-plaintext highlighter-rouge">Class</code> 对象，可以获取类的构造函数，并动态创建对象。</p>
+<h2 id="三md5-的核心算法结构">三、MD5 的核心算法结构</h2>
 
-<hr />
+<h3 id="31-四个非线性函数">3.1 四个非线性函数</h3>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">F</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">Z</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="n">X</span> <span class="o">&amp;</span> <span class="n">Y</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="o">~</span><span class="n">X</span> <span class="o">&amp;</span> <span class="n">Z</span><span class="p">)</span>
+<span class="n">G</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">Z</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="n">X</span> <span class="o">&amp;</span> <span class="n">Z</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">Y</span> <span class="o">&amp;</span> <span class="o">~</span><span class="n">Z</span><span class="p">)</span>
+<span class="n">H</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">Z</span><span class="p">)</span> <span class="o">=</span> <span class="n">X</span> <span class="o">^</span> <span class="n">Y</span> <span class="o">^</span> <span class="n">Z</span>
+<span class="n">I</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">Z</span><span class="p">)</span> <span class="o">=</span> <span class="n">Y</span> <span class="o">^</span> <span class="p">(</span><span class="n">X</span> <span class="o">|</span> <span class="o">~</span><span class="n">Z</span><span class="p">)</span>
+</code></pre></div></div>
 
-<h3 id="34-获取字段成员变量">3.4 获取字段（成员变量）</h3>
-<p>通过 <code class="language-plaintext highlighter-rouge">Class</code> 对象，可以获取类的字段，并读取或修改字段值。</p>
-
-<hr />
-
-<h3 id="35-获取方法">3.5 获取方法</h3>
-<p>通过 <code class="language-plaintext highlighter-rouge">Class</code> 对象，可以获取类的方法，并调用方法。</p>
-
-<hr />
-
-<h3 id="36-动态代理">3.6 动态代理</h3>
-<p>动态代理是反射的重要应用之一，允许在运行时动态生成代理类，拦截方法调用。</p>
-
-<hr />
-
-<h2 id="4-反射的应用场景">4. 反射的应用场景</h2>
-<p>反射在以下场景中非常有用：</p>
+<h3 id="32-每轮操作">3.2 每轮操作</h3>
+<p>每轮对 A、B、C、D 进行如下操作（以第一轮为例）：</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">A</span> <span class="o">=</span> <span class="n">B</span> <span class="o">+</span> <span class="p">((</span><span class="n">A</span> <span class="o">+</span> <span class="n">F</span><span class="p">(</span><span class="n">B</span><span class="p">,</span><span class="n">C</span><span class="p">,</span><span class="n">D</span><span class="p">)</span> <span class="o">+</span> <span class="n">M</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">+</span> <span class="n">T</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">&lt;&lt;&lt;</span> <span class="n">s</span><span class="p">)</span>
+</code></pre></div></div>
 <ul>
-  <li><strong>框架开发</strong>：如 Spring、Hibernate 等框架大量使用反射实现依赖注入、动态代理等功能。</li>
-  <li><strong>动态加载类</strong>：如插件系统，可以在运行时加载和使用外部类。</li>
-  <li><strong>序列化与反序列化</strong>：如 JSON/XML 序列化工具。</li>
-  <li><strong>测试框架</strong>：如 JUnit 使用反射调用测试方法。</li>
-  <li><strong>代码分析工具</strong>：如 IDE 的代码补全和静态分析功能。</li>
+  <li><code class="language-plaintext highlighter-rouge">M[k]</code>：当前分组的第 k 个字</li>
+  <li><code class="language-plaintext highlighter-rouge">T[i]</code>：常量表</li>
+  <li><code class="language-plaintext highlighter-rouge">s</code>：循环左移位数</li>
 </ul>
 
 <hr />
 
-<h2 id="5-反射的优缺点">5. 反射的优缺点</h2>
+<h2 id="四md5-的应用场景">四、MD5 的应用场景</h2>
 
-<h3 id="优点">优点</h3>
 <ul>
-  <li><strong>灵活性</strong>：可以在运行时动态操作类和对象。</li>
-  <li><strong>动态性</strong>：支持动态加载和调用，适合插件化开发。</li>
-  <li><strong>通用性</strong>：可以编写通用代码，减少重复。</li>
-</ul>
-
-<h3 id="缺点">缺点</h3>
-<ul>
-  <li><strong>性能开销</strong>：反射操作比直接调用慢，可能影响性能。</li>
-  <li><strong>安全性问题</strong>：可能破坏封装性，访问私有字段或方法。</li>
-  <li><strong>代码复杂性</strong>：反射代码通常较难阅读和维护。</li>
+  <li><strong>文件完整性校验</strong>：下载文件时校验 MD5，防止篡改。</li>
+  <li><strong>数字签名</strong>：与非对称加密结合，保证消息不可抵赖。</li>
+  <li><strong>密码存储</strong>：对密码进行哈希存储（但已不推荐单独使用）。</li>
+  <li><strong>唯一标识</strong>：为数据生成唯一标识符（如短链、去重等）。</li>
 </ul>
 
 <hr />
 
-<h2 id="6-反射的注意事项">6. 反射的注意事项</h2>
+<h2 id="五md5-的安全性与局限">五、MD5 的安全性与局限</h2>
+
+<h3 id="51-安全性问题">5.1 安全性问题</h3>
 <ul>
-  <li><strong>性能问题</strong>：反射操作较慢，尽量避免在性能敏感的场景中频繁使用。</li>
-  <li><strong>安全性问题</strong>：滥用反射可能导致安全漏洞，尤其是访问私有成员。</li>
-  <li><strong>兼容性问题</strong>：反射依赖于类的结构，类的修改可能导致反射代码失效。</li>
-  <li><strong>访问限制</strong>：Java 9 及以上版本对反射访问做了更多限制（如模块化系统）。</li>
+  <li><strong>碰撞攻击</strong>：已被证明可以找到不同输入产生相同 MD5 值（2004 年被攻破）。</li>
+  <li><strong>穷举攻击</strong>：128 位输出，理论上抗穷举，但计算能力提升后风险增加。</li>
+  <li><strong>彩虹表攻击</strong>：针对常用密码的预计算哈希表，破解效率高。</li>
+</ul>
+
+<h3 id="52-现状与替代">5.2 现状与替代</h3>
+<ul>
+  <li><strong>不再推荐用于安全场景</strong>，如数字签名、密码存储等。</li>
+  <li>推荐使用更安全的哈希算法，如 SHA-256、SHA-3、bcrypt、scrypt、Argon2 等。</li>
 </ul>
 
 <hr />
 
-<h2 id="7-总结">7. 总结</h2>
-<p>反射是 Java 提供的一种强大机制，允许程序在运行时动态操作类和对象。尽管反射带来了极大的灵活性，但也需要谨慎使用，避免性能和安全问题。在实际开发中，反射通常用于框架和工具的底层实现，而不是业务代码的常规操作。</p>
+<h2 id="六md5-的拓展与变种">六、MD5 的拓展与变种</h2>
+
+<ul>
+  <li><strong>HMAC-MD5</strong>：结合密钥的消息认证码，用于数据完整性和认证。</li>
+  <li><strong>MD4/MD2</strong>：MD5 的前身，安全性更弱。</li>
+  <li><strong>MD6</strong>：设计为更安全的变种，但未被广泛采用。</li>
+  <li><strong>与 SHA 系列对比</strong>：SHA-1、SHA-2、SHA-3 等在安全性和性能上各有优劣。</li>
+</ul>
+
+<hr />
+
+<h2 id="七md5-的代码实现python-示例">七、MD5 的代码实现（Python 示例）</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">hashlib</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="sh">"</span><span class="s">hello world</span><span class="sh">"</span>
+<span class="n">md5_hash</span> <span class="o">=</span> <span class="n">hashlib</span><span class="p">.</span><span class="nf">md5</span><span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="nf">encode</span><span class="p">(</span><span class="sh">'</span><span class="s">utf-8</span><span class="sh">'</span><span class="p">)).</span><span class="nf">hexdigest</span><span class="p">()</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">md5_hash</span><span class="p">)</span>  <span class="c1"># 输出：5eb63bbbe01eeed093cb22bb8f5acdc3
+</span></code></pre></div></div>
+
+<hr />
+
+<h2 id="八常见问题与误区">八、常见问题与误区</h2>
+
+<ul>
+  <li><strong>MD5 加密？</strong><br />
+MD5 不是加密算法，而是哈希算法，不可逆。</li>
+  <li><strong>MD5 能防篡改吗？</strong><br />
+只能防止偶然错误，不能防止有意攻击。</li>
+  <li><strong>MD5 还能用吗？</strong><br />
+非安全场景（如文件校验）仍可用，安全场景应选用更强算法。</li>
+</ul>
+
+<hr />
+
+<h2 id="九参考资料">九、参考资料</h2>
+
+<ul>
+  <li><a href="https://datatracker.ietf.org/doc/html/rfc1321">RFC 1321 - The MD5 Message-Digest Algorithm</a></li>
+  <li><a href="https://www.mscs.dal.ca/~selinger/md5collision/">MD5 Collision Demo</a></li>
+</ul>
+
 </section>
             </div><div class="search-results">
     <div class="has-results">
@@ -445,15 +468,11 @@ window.MathJax = {
 </script>
 
 
-                        <a href="/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-21-http.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: HTTP 协议详解">
+                        <a href="/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-22-aop.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: AOP注解实现参数校验">
                             <i class="fa fa-angle-left"></i>
                         </a>
                     
 
-                    
-                        <a href="/erkan9527-blog/%E6%8A%80%E6%9C%AF/2025-07-22-aop.html" class="navigation navigation-next navigation-unique" aria-label="Next page: AOP注解实现参数校验">
-                            <i class="fa fa-angle-right"></i>
-                        </a>
                     
                 </div>
             </div>
@@ -466,15 +485,6 @@ window.MathJax = {
         "title": "Introduction",
         "level": "1.1",
         "depth": 1,
-        
-        "next": {
-            "title": "AOP注解实现参数校验",
-            "level": "1.2",
-            "depth": 1,
-            "path": "_posts/2025-07-22-aop.md",
-            "ref": "_posts/2025-07-22-aop.md",
-            "articles": []
-        },
         
         "dir": "ltr"
     },    "config": {
@@ -564,8 +574,8 @@ window.MathJax = {
         "gitbook": "*"
     },
     "file": {
-        "path": "_posts/2025-07-22-refect.md",
-        "mtime": "2025-07-21 00:00:00 +0000",
+        "path": "_posts/2025-08-4-md5.md",
+        "mtime": "2025-08-04 00:00:00 +0000",
         "type": "markdown"
     },
     "gitbook": {
